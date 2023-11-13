@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShieldBehavior : MonoBehaviour
+public class HammerBehavior : MonoBehaviour
 {
     //public Material markMaterial;
     //private LineRenderer lineRenderer;
@@ -16,7 +16,7 @@ public class ShieldBehavior : MonoBehaviour
         //lineRenderer.enabled = false; // Hide the LineRenderer initially
         //lineRenderer.material = markMaterial;
 
-        markParent = new GameObject("Marks").transform; // Create an empty parent for the marks
+        //markParent = new GameObject("Marks").transform; // Create an empty parent for the marks
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -28,18 +28,18 @@ public class ShieldBehavior : MonoBehaviour
             ContactPoint contact = collision.contacts[0]; // Assuming the first contact point is what you want
             
             // Create a mark at the contact point
-            GameObject mark = Instantiate(markPrefab, contact.point, Quaternion.identity, this.gameObject.transform);
+            //GameObject mark = Instantiate(markPrefab, contact.point, Quaternion.identity, this.gameObject.transform);
 
             // Destroy the mark after one second
-            Destroy(mark, 1f);
+            //Destroy(mark, 1f);
 
             Debug.Log(gameObject.transform.name+" hit : "+collision.gameObject.transform.name);
 
             // Get the contact point of the collision
-            //if (collision.transform.gameObject.GetComponent<Bullet_Obstacle>())
+            //if (collision.transform.gameObject.GetComponent<Cube>())
             {
-                Debug.Log(collision.transform.name + " is hit by the shield");
-                collision.transform.gameObject.GetComponent<Bullet_Obstacle>().HitObject();
+                Debug.Log(collision.transform.name + " is hit by the Hammer");
+                //collision.transform.gameObject.GetComponent<Cube>().HitObject();
             }
             // Set the positions of the LineRenderer to create a point at the contact point
             //Vector3[] positions = { contact.point, contact.point };

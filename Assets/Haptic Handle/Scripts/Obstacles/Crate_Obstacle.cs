@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet_Obstacle : MonoBehaviour
+public class Crate_Obstacle : MonoBehaviour
 {
     public ParticleSystem particleSystem;
     private MeshRenderer meshRenderer;
@@ -25,22 +25,22 @@ public class Bullet_Obstacle : MonoBehaviour
         meshRenderer = GetComponent<MeshRenderer>();
 
         // Get the Mesh Renderer component of Child 1.
-        child1MeshRenderer = transform.GetChild(1).GetComponent<MeshRenderer>();
+        child1MeshRenderer = transform.GetChild(0).GetComponent<MeshRenderer>();
 
         // Get the Collider component of the object.
         collider = GetComponent<Collider>();
 
         // Get theCollider  component of Child 1.
-        child1Collider = transform.GetChild(1).GetComponent<Collider>();
+        child1Collider = transform.GetChild(0).GetComponent<Collider>();
 
     }
     // Update is called once per frame
     void Update()
     {
-        transform.position += Time.deltaTime * transform.up * 4;
-        if(transform.position.z <0.7)
+        transform.position += Time.deltaTime * transform.forward * 2;
+        if (transform.position.z < 0.7)
         {
-            
+
             Destroy(transform.gameObject);
             //Debug.Log("It wasn't destroied");
         }
@@ -48,13 +48,13 @@ public class Bullet_Obstacle : MonoBehaviour
     public void HitObject()
     {
         // Disable the Mesh Renderer to make the object invisible.
-        //meshRenderer.enabled = false;
+        meshRenderer.enabled = false;
 
         // Disable the Mesh Renderer of Child 1 to make it invisible.
         child1MeshRenderer.enabled = false;
 
         collider.enabled = false;
-        //child1Collider.enabled = false;
+        child1Collider.enabled = false;
 
         // Activate the particle system.
         particleSystem.Play();

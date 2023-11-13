@@ -3594,7 +3594,6 @@ GameObject:
   - component: {fileID: 7324148727981394038}
   - component: {fileID: 1515650813989016332}
   - component: {fileID: 5116525049270948309}
-  - component: {fileID: 5116525049270948308}
   m_Layer: 10
   m_Name: PistolSilenced_Right
   m_TagString: Untagged
@@ -3867,7 +3866,7 @@ MonoBehaviour:
   HitFXPrefab: {fileID: 3454612190511497970, guid: fa39ce2ce96bec94b82f2c8124ce3930, type: 3}
   MixerName: {fileID: 0}
   GunShotSound: {fileID: 8300000, guid: 83dc0287d0634ed4cb587d44b592210c, type: 3}
-  GunShotVolume: 0.75
+  GunShotVolume: 0.1
   EmptySound: {fileID: 8300000, guid: 3ceadf14726b0864fb39bb646c0f9ba0, type: 3}
   EmptySoundVolume: 1
   SlideDistance: -0.028
@@ -3982,81 +3981,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.0040224753, y: 0.0200205, z: 0.057395697}
   m_Center: {x: 0.015018998, y: -0.07804542, z: -0.060444117}
---- !u!114 &5116525049270948308
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6615760040123564878}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ae1334e1a843914ea215ac160781472, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  layer:
-    serializedVersion: 2
-    m_Bits: 0
-  MaxRange: 25
-  Damage: 25
-  FiringMethod: 0
-  ReloadMethod: 0
-  FiringRate: 0.05
-  BulletImpactForce: 1000
-  InternalAmmo: 0
-  MaxInternalAmmo: 10
-  AutoChamberRounds: 1
-  MustChamberRounds: 0
-  AlwaysFireProjectile: 0
-  FireProjectileInSlowMo: 1
-  SlowMoRateOfFire: 0.3
-  ShotForce: 20
-  BulletCasingForce: 3
-  RecoilForce: {x: 0, y: 0, z: 0}
-  RecoilDuration: 0.3
-  ValidLayers:
-    serializedVersion: 2
-    m_Bits: 1281
-  TriggerTransform: {fileID: 8073129281524049298}
-  SlideTransform: {fileID: 6615760038457854382}
-  MuzzlePointTransform: {fileID: 6615760038651379665}
-  EjectPointTransform: {fileID: 6615760038435410407}
-  ChamberedBullet: {fileID: 3126571952661463620}
-  MuzzleFlashObject: {fileID: 6262613482238267761}
-  BulletCasingPrefab: {fileID: 4293907302815737054, guid: f8313a7c0e07bba40ac0f3634a590caf, type: 3}
-  ProjectilePrefab: {fileID: 1449094533667961452, guid: 4af46545725f628459794cfc7c0f7d54, type: 3}
-  HitFXPrefab: {fileID: 3454612190511497970, guid: fa39ce2ce96bec94b82f2c8124ce3930, type: 3}
-  MixerName: {fileID: 0}
-  GunShotSound: {fileID: 8300000, guid: 83dc0287d0634ed4cb587d44b592210c, type: 3}
-  GunShotVolume: 0.75
-  EmptySound: {fileID: 8300000, guid: 3ceadf14726b0864fb39bb646c0f9ba0, type: 3}
-  EmptySoundVolume: 1
-  SlideDistance: -0.028
-  ForceSlideBackOnLastShot: 1
-  slideSpeed: 1
-  EjectInput: 04000000
-  ReleaseSlideInput: 02000000
-  ReloadInput: 04000000
-  BulletInChamber: 0
-  EmptyBulletInChamber: 0
-  onShootEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  onAttachedAmmoEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  onDetachedAmmoEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  onWeaponChargedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  onDealtDamageEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  onRaycastHitEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &6615760040468360991
 GameObject:
   m_ObjectHideFlags: 0

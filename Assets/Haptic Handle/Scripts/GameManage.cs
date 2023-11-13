@@ -12,6 +12,7 @@ public class GameManage : MonoBehaviour
     public GameObject[] Sword_Obstacles;
     public GameObject[] Gun_Obstacles;
     public GameObject[] Shield_Obstacles;
+    public GameObject[] Hammer_Obstacles;
     public Transform[] Obstacle_points;
 
     public float Music_Beat = (60 / 95) * 2; //105
@@ -28,7 +29,7 @@ public class GameManage : MonoBehaviour
     }
     void Start()
     {
-        CurrentWeapon = WeaponType.Sword;
+        //CurrentWeapon = WeaponType.Sword;
 
     }
 
@@ -38,7 +39,7 @@ public class GameManage : MonoBehaviour
         Obstacle_Play();
         Update_GameLevel();
         Total_Timer += Time.deltaTime;
-        Debug.Log(Total_Timer+ ": 경과");
+        //Debug.Log(Total_Timer+ ": 경과");
         
     }
 
@@ -48,15 +49,15 @@ public class GameManage : MonoBehaviour
         switch (CurrentLevel)
         {
             case GameLevel.Easy:
-                Debug.Log("Easy");
+                //Debug.Log("Easy");
                 Current_Music_Beat = Music_Beat;
                 break;
             case GameLevel.Normal:
-                Debug.Log("Normal");
+                //Debug.Log("Normal");
                 Current_Music_Beat = Music_Beat/2f;
                 break;
             case GameLevel.Hard:
-                Debug.Log("Hard");
+                //Debug.Log("Hard");
                 Current_Music_Beat = Music_Beat / Random.Range(2, 4);
                 break;
             default:
@@ -69,16 +70,20 @@ public class GameManage : MonoBehaviour
         switch (CurrentWeapon)
         {
             case WeaponType.Sword:
-                Debug.Log("Sword");
+                //Debug.Log("Sword");
                 Sword_Obstacle();
                 break;
             case WeaponType.Gun:
-                Debug.Log("Gun");
+                //Debug.Log("Gun");
                 Gun_Obstacle();
                 break;
             case WeaponType.Shield:
-                Debug.Log("Shield");
+                //Debug.Log("Shield");
                 Shield_Obstacle();
+                break;
+            case WeaponType.Hammer:
+                //Debug.Log("Hammer");
+                Hammer_Obstacle();
                 break;
             default:
                 Sword_Obstacle();
@@ -118,6 +123,17 @@ public class GameManage : MonoBehaviour
         }
         Beat_timer += Time.deltaTime;
     }
+    public void Hammer_Obstacle()
+    {
+        if (Beat_timer > Current_Music_Beat)
+        {
+            GameObject cube = Instantiate(Hammer_Obstacles[Random.Range(0, 2)], Obstacle_points[Random.Range(0, 6)]);
+            cube.transform.localPosition = Vector3.zero;
+            //cube.transform.Rotate(transform.forward, 90 * Random.Range(0, 4));
+            Beat_timer -= Current_Music_Beat;
+        }
+        Beat_timer += Time.deltaTime;
+    }
 }
 
 public enum WeaponType
@@ -125,6 +141,7 @@ public enum WeaponType
     Sword,
     Gun,
     Shield,
+    Hammer,
     // Add more weapon types as needed
 }
 
