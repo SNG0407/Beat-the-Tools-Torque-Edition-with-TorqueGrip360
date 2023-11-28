@@ -14,6 +14,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Haptic Handle/Scenes/BeatShooting.unity
     guid: e609ab1096c3b3747b2e72e82b100e17
+  - enabled: 1
+    path: Assets/Haptic Handle/Scenes/BeatHammer.unity
+    guid: aab4ce2625794fa46b17690c41a7d45d
+  - enabled: 1
+    path: Assets/Haptic Handle/Scenes/MainScene.unity
+    guid: 7379276e94e04504a95b6e0117fe72ba
+  - enabled: 1
+    path: Assets/Haptic Handle/Scenes/Glow.unity
+    guid: e281c30c46d174a4181f750c34ba8f9b
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 684297ba481b1704fa3459b80e595c57, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 89535ab11f7c7c8468497ae0dc9c5698, type: 2}

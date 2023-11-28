@@ -536,6 +536,12 @@ namespace BNG {
             Debug.Log(gameObject.transform.name + " hit the " + hit.collider.name);
             Debug.Log("This layer: "+ layer.value);
             Debug.Log("Hit layer: "+ hit.collider.gameObject.layer);
+            if (hit.collider.tag == "BeatCube")
+            {
+                Debug.Log(hit.collider.name);
+                //hit.collider.GetComponent<DestoryableObject>().StarDestoryed(hit.point);
+                GameManage.instance.TorqueGauge.value++;
+            }
             //DestoryableObject
             if (hit.collider.tag == "Star")
             {
