@@ -9,7 +9,7 @@ public class HammerBehavior : MonoBehaviour
 
     public GameObject markPrefab;
     private Transform markParent;
-
+    private bool hasCollided = false;
     private void Start()
     {
         //lineRenderer = GetComponent<LineRenderer>();
@@ -18,29 +18,73 @@ public class HammerBehavior : MonoBehaviour
 
         //markParent = new GameObject("Marks").transform; // Create an empty parent for the marks
     }
-
+    private void OnCollisionExit(Collision collision)
+    {
+        hasCollided = false; // Reset the flag after the hit message has been displayed and hidden
+    }
     private void OnCollisionEnter(Collision collision)
     {
         //Debug.Log("Something hit");
         // Check if the collision is from an object that you want to leave a mark
-        if (collision.gameObject.tag == "BeatCube")
+        //Debug.Log(gameObject.transform.name + " hit : " + collision.gameObject.transform.name);
+
+        // Check which collider of the sword hit the object
+        foreach (ContactPoint contact in collision.contacts)
         {
-            ContactPoint contact = collision.contacts[0]; // Assuming the first contact point is what you want
-            
-            // Create a mark at the contact point
-            //GameObject mark = Instantiate(markPrefab, contact.point, Quaternion.identity, this.gameObject.transform);
+            if (!hasCollided && contact.thisCollider.CompareTag("Red"))
+            {
+                if (collision.gameObject.name.Contains("Crate_Red"))
+                {
+                    Debug.Log($"child: {contact.thisCollider.transform.name}, " + $"Beat Obj: {collision.gameObject.transform.name}");
+                    // Add your desired logic here based on the collided child
+                    StartCoroutine(GameManageBeatDevil.instance.ShowHitMessage("[Red] Perfect hit!", Color.red));
+                    GameManageBeatDevil.instance.HPGauge.value = GameManageBeatDevil.instance.HPGauge.value - 1;
+                    hasCollided = true;
+                }
+            }
+            else if (!hasCollided && contact.thisCollider.CompareTag("Blue"))
+            {
+                if (contact.thisCollider.CompareTag("Blue"))
+                {
+                    if (collision.gameObject.name.Contains("Crate_Blue"))
+                    {
+                        Debug.Log($"child: {contact.thisCollider.transform.name}, " + $"Beat Obj: {collision.gameObject.transform.name}");
+                        // Add your desired logic here based on the collided child
+                        StartCoroutine(GameManageBeatDevil.instance.ShowHitMessage("[Blue] Perfect hit!", Color.blue));
+                        GameManageBeatDevil.instance.HPGauge.value = GameManageBeatDevil.instance.HPGauge.value - 1;
+                        hasCollided = true;
+                    }
+                }
+            }
+        }
+        //if (collision.gameObject.name.Contains("Crate_Blue") || collision.gameObject.name.Contains("Crate_Red"))
+        //{
+        //    ContactPoint contact = collision.contacts[0]; // Assuming the first contact point is what you want
 
-            // Destroy the mark after one second
-            //Destroy(mark, 1f);
+        //    // Create a mark at the contact point
+        //    //GameObject mark = Instantiate(markPrefab, contact.point, Quaternion.identity, this.gameObject.transform);
 
-            Debug.Log(gameObject.transform.name+" hit : "+collision.gameObject.transform.name);
+        //    // Destroy the mark after one second
+        //    //Destroy(mark, 1f);
+        //    // Check which child collided
+
+        //    foreach (Transform child in transform)
+        //    {
+        //        if (collision.gameObject.name.Contains("Crate_Blue") && child.gameObject.name.Contains("Blue"))
+        //        {
+        //            Debug.Log($"child: {child.name}, "+ $"Beat Obj: {collision.gameObject.transform.name}");
+        //            // Add your desired logic here based on the collided child
+        //            StartCoroutine(GameManageBeatDevil.instance.ShowHitMessage());
+        //        }
+        //    }
+            //Debug.Log(gameObject.transform.name+" hit : "+collision.gameObject.transform.name);
 
             // Get the contact point of the collision
             //if (collision.transform.gameObject.GetComponent<Cube>())
-            {
-                Debug.Log(collision.transform.name + " is hit by the Hammer");
-                //collision.transform.gameObject.GetComponent<Cube>().HitObject();
-            }
+            //{
+            //    Debug.Log(collision.transform.name + " is hit by the Hammer");
+            //    //collision.transform.gameObject.GetComponent<Cube>().HitObject();
+            //}
             // Set the positions of the LineRenderer to create a point at the contact point
             //Vector3[] positions = { contact.point, contact.point };
             //lineRenderer.positionCount = 2;
@@ -49,9 +93,7 @@ public class HammerBehavior : MonoBehaviour
             //// Show the LineRenderer for a brief moment (e.g., 1 second)
             //lineRenderer.enabled = true;
             //Invoke("HideMark", 10f);
-
-           
-        }
+        //}
     }
 
     //private void HideMark()

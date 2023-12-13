@@ -5,9 +5,9 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-public class GameManage : MonoBehaviour
+public class GameManageBeatDevil : MonoBehaviour
 {
-    public static GameManage instance;
+    public static GameManageBeatDevil instance;
 
     public WeaponType CurrentStage;
     public WeaponType HoldingWeapon;
@@ -22,6 +22,7 @@ public class GameManage : MonoBehaviour
 
     //Game UI
     public Slider TorqueGauge;
+    public Slider HPGauge;
     public Slider RemainTime;
     public TextMeshProUGUI GameLevel_Text;
 
@@ -40,7 +41,7 @@ public class GameManage : MonoBehaviour
     public bool Is_Boss_Possible = false;
 
     // Start is called before the first frame update
-
+    public TextMeshProUGUI HitMessage;
 
     public enum WeaponType
     {
@@ -67,6 +68,8 @@ public class GameManage : MonoBehaviour
     }
     void Start()
     {
+        HitMessage.enabled = false;
+
         //CurrentWeapon = WeaponType.Sword;
         RemainTime.value = 180;
 
@@ -87,13 +90,15 @@ public class GameManage : MonoBehaviour
         Total_Timer += Time.deltaTime;
         //Debug.Log(Total_Timer+ ": 경과");
         GameOverCheck();
-        BadgeCheck();
+        //BadgeCheck();
 
     }
     public void LoadTargetScene(string targetSceneName)
     {
         SceneManager.LoadScene(targetSceneName);
     }
+
+
     public void BadgeCheck()
     {
         if(TorqueGauge.value == TorqueGauge.maxValue)
@@ -127,12 +132,26 @@ public class GameManage : MonoBehaviour
         if (RemainTime.value <= 0)
         {
             Debug.Log("Game Over!");
-            CurrentStage = WeaponType.Main;
         }
     }
 
     public void Update_GameLevel()
     {
+        if(HPGauge.value>70.0 && HPGauge.value <= 100.0)
+        {
+            CurrentLevel = GameLevel.Easy;
+        }else if (HPGauge.value > 40.0 && HPGauge.value <= 70.0)
+        {
+            CurrentLevel = GameLevel.Normal;
+        }
+        if (HPGauge.value > 0.0 && HPGauge.value <= 40.0)
+        {
+            CurrentLevel = GameLevel.Hard;
+        }
+        if (HPGauge.value <= 0.0)
+        {
+            Debug.Log("Game Over!");
+        }
         switch (CurrentLevel)
         {
             case GameLevel.Easy:
@@ -181,7 +200,7 @@ public class GameManage : MonoBehaviour
                 //Hammer_Obstacle();
                 break;
             default:
-                //Sword_Obstacle();
+                Sword_Obstacle();
                 break;
         }
     }
@@ -228,5 +247,17 @@ public class GameManage : MonoBehaviour
             Beat_timer -= Current_Music_Beat;
         }
         Beat_timer += Time.deltaTime;
+    }
+    public IEnumerator ShowHitMessage(string msg, Color textColor)
+    {
+        // Display hit message
+        HitMessage.enabled = true;
+        HitMessage.text = msg;
+        HitMessage.color = textColor;
+        // Wait for the specified duration
+        yield return new WaitForSeconds(1f);
+
+        // Hide hit message after the specified duration
+        HitMessage.enabled = false;
     }
 }
