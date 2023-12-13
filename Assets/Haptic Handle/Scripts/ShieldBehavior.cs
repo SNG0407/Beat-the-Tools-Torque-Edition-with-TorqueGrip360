@@ -38,7 +38,7 @@ public class ShieldBehavior : MonoBehaviour
             // Get the contact point of the collision
             //if (collision.transform.gameObject.GetComponent<Bullet_Obstacle>())
         if (collision.gameObject.name.Contains("Bullet_Big") || collision.gameObject.name.Contains("Bullet_Small"))
-                {
+            {
                 Debug.Log(collision.transform.name + " is hit by the shield");
                 collision.transform.gameObject.GetComponent<Bullet_Obstacle>().HitObject();
             }
