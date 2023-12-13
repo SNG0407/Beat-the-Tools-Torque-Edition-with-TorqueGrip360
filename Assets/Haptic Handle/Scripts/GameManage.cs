@@ -20,6 +20,7 @@ public class GameManage : MonoBehaviour
     public GameObject[] Hammer_Obstacles;
     public Transform[] Obstacle_points;
 
+
     //Game UI
     public Slider TorqueGauge;
     public Slider RemainTime;
@@ -88,7 +89,7 @@ public class GameManage : MonoBehaviour
         //Debug.Log(Total_Timer+ ": 경과");
         GameOverCheck();
         BadgeCheck();
-
+        
     }
     public void LoadTargetScene(string targetSceneName)
     {

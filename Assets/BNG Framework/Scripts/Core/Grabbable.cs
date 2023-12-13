@@ -1915,7 +1915,7 @@ namespace BNG {
                         if (input.XButtonUp) {
                             e.OnButton1Up();
                         }
-                        if (input.YButton) {
+                        if (input.YButton ) {
                             e.OnButton2();
                         }
                         if (input.YButtonDown) {

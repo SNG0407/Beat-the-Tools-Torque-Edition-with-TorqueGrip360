@@ -20,6 +20,14 @@ public class GameManageBeatDevil : MonoBehaviour
     public GameObject[] Hammer_Obstacles;
     public Transform[] Obstacle_points;
 
+    //Holding Weapons
+    public GameObject Sword_R;
+    public GameObject Sword_L;
+    public GameObject Gun_R;
+    public GameObject Gun_L;
+    public GameObject Shield;
+    public GameObject Hammer;
+
     //Game UI
     public Slider TorqueGauge;
     public Slider HPGauge;
@@ -91,7 +99,7 @@ public class GameManageBeatDevil : MonoBehaviour
         //Debug.Log(Total_Timer+ ": 경과");
         GameOverCheck();
         //BadgeCheck();
-
+        WeaponChange();
     }
     public void LoadTargetScene(string targetSceneName)
     {
@@ -99,6 +107,46 @@ public class GameManageBeatDevil : MonoBehaviour
     }
 
 
+    public void WeaponChange()
+    {
+        switch (HoldingWeapon)
+        {
+            case WeaponType.Sword:
+                Sword_R.SetActive(true);
+                Sword_L.SetActive(true);
+                Gun_R.SetActive(false);
+                Gun_L.SetActive(false);
+                Shield.SetActive(false);
+                Hammer.SetActive(false);
+                break;
+            case WeaponType.Gun:
+                Sword_R.SetActive(false);
+                Sword_L.SetActive(false);
+                Gun_R.SetActive(true);
+                Gun_L.SetActive(true);
+                Shield.SetActive(false);
+                Hammer.SetActive(false);
+                break;
+            case WeaponType.Shield:
+                Sword_R.SetActive(false);
+                Sword_L.SetActive(false);
+                Gun_R.SetActive(false);
+                Gun_L.SetActive(false);
+                Shield.SetActive(true);
+                Hammer.SetActive(false);
+                break;
+            case WeaponType.Hammer:
+                Sword_R.SetActive(false);
+                Sword_L.SetActive(false);
+                Gun_R.SetActive(false);
+                Gun_L.SetActive(false);
+                Shield.SetActive(false);
+                Hammer.SetActive(true);
+                break;
+            default:
+                break;
+        }
+    }
     public void BadgeCheck()
     {
         if(TorqueGauge.value == TorqueGauge.maxValue)
