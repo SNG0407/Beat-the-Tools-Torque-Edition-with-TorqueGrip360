@@ -25,6 +25,7 @@ public class GameManage : MonoBehaviour
     public Slider TorqueGauge;
     public Slider RemainTime;
     public TextMeshProUGUI GameLevel_Text;
+    public GameObject WarningUI;
 
     //Game Beat
     public float Music_Beat = (60 / 95) * 2; //105
@@ -39,6 +40,11 @@ public class GameManage : MonoBehaviour
     public bool Shield_Master = false;
     public bool Hammer_Master = false;
     public bool Is_Boss_Possible = false;
+    public GameObject Sword_Badge;
+    public GameObject Gun_Badge;
+    public GameObject Shield_Badge;
+    public GameObject Hammer_Badge;
+    public GameObject ToolMaster_Badge;
 
     // Start is called before the first frame update
 
@@ -93,42 +99,100 @@ public class GameManage : MonoBehaviour
     }
     public void LoadTargetScene(string targetSceneName)
     {
-        SceneManager.LoadScene(targetSceneName);
+        if (targetSceneName == "BeatDevil")
+        {
+            if (Is_Boss_Possible == true)
+            {
+                SceneManager.LoadScene(targetSceneName);
+            }
+            else
+            {
+                Debug.Log("The Beat Devil is too strong. You need to master all Tools first!");
+                StartCoroutine(ShowWarning());
+            }
+        }
+        else
+        {
+            SceneManager.LoadScene(targetSceneName);
+        }
+    }
+    IEnumerator ShowWarning()
+    {
+        WarningUI.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        WarningUI.SetActive(false);
+    }
+    public void BadgeImageOn()
+    {
+        if (Sword_Master == true)
+        {
+            Sword_Badge.SetActive(true);
+            Debug.Log("Sword master!!!!!!!!");
+
+        }
+        if (Gun_Master == true)
+        {
+            Gun_Badge.SetActive(true);
+        }
+        if (Shield_Master == true)
+        {
+            Shield_Badge.SetActive(true);
+        }
+        if (Hammer_Master == true)
+        {
+            Hammer_Badge.SetActive(true);
+        }
+        if(Sword_Master == true && Gun_Master == true && Shield_Master == true && Hammer_Master == true)
+        {
+            Is_Boss_Possible = true;
+            ToolMaster_Badge.SetActive(true);
+        }
     }
     public void BadgeCheck()
     {
-        if(TorqueGauge.value == TorqueGauge.maxValue)
+        if (SceneManager.GetActiveScene().name != "MainScene")
         {
-            switch (CurrentStage)
+            if (TorqueGauge.value == TorqueGauge.maxValue)
             {
-                case WeaponType.Sword:
-                    Debug.Log("You Mastered Sword!");
-                    Sword_Master = true;
-                    break;
-                case WeaponType.Gun:
-                    Gun_Master = true;
-                    Debug.Log("You Mastered Gun!");
-                    break;
-                case WeaponType.Shield:
-                    Shield_Master = true;
-                    Debug.Log("You Mastered Shield!");
-                    break;
-                case WeaponType.Hammer:
-                    Hammer_Master = true;
-                    Debug.Log("You Mastered Hammer!");
-                    break;
-                default:
-                    break;
+                switch (CurrentStage)
+                {
+                    case WeaponType.Sword:
+                        Debug.Log("You Mastered Sword!");
+                        Sword_Master = true;
+
+                        break;
+                    case WeaponType.Gun:
+                        Gun_Master = true;
+                        Debug.Log("You Mastered Gun!");
+                        break;
+                    case WeaponType.Shield:
+                        Shield_Master = true;
+                        Debug.Log("You Mastered Shield!");
+                        break;
+                    case WeaponType.Hammer:
+                        Hammer_Master = true;
+                        Debug.Log("You Mastered Hammer!");
+                        break;
+                    default:
+                        break;
+                }
             }
+        }
+        else
+        {
+            BadgeImageOn();
         }
     }
     public void GameOverCheck()
     {
-        RemainTime.value = 180 - Total_Timer;
-        if (RemainTime.value <= 0)
-        {
-            Debug.Log("Game Over!");
-            CurrentStage = WeaponType.Main;
+        if (SceneManager.GetActiveScene().name != "MainScene")
+        { 
+            RemainTime.value = 180 - Total_Timer;
+            if (RemainTime.value <= 0)
+            {
+                Debug.Log("Game Over!");
+                CurrentStage = WeaponType.Main;
+            }
         }
     }
 

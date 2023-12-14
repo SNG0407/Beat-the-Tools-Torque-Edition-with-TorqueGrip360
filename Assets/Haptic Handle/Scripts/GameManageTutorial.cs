@@ -5,9 +5,9 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-public class GameManageBeatDevil : MonoBehaviour
+public class GameManageTutorial : MonoBehaviour
 {
-    public static GameManageBeatDevil instance;
+    public static GameManageTutorial instance;
 
     public WeaponType CurrentStage;
     public WeaponType HoldingWeapon;
@@ -20,6 +20,10 @@ public class GameManageBeatDevil : MonoBehaviour
     public GameObject[] Hammer_Obstacles;
     public Transform[] Obstacle_points;
 
+    public GameObject Dummy;
+    public GameObject TutorialUI1;
+    public GameObject TutorialUI2;
+
     //Holding Weapons
     public GameObject Sword_R;
     public GameObject Sword_L;
@@ -29,14 +33,7 @@ public class GameManageBeatDevil : MonoBehaviour
     public GameObject Hammer;
 
     //Game UI
-    public Slider TorqueGauge;
-    public Slider HPGauge;
-    public Slider RemainTime;
     public TextMeshProUGUI GameLevel_Text;
-    public GameObject BossFigure;
-    public GameObject GameOverFigure;
-    public GameObject VictoryFigure;
-    public GameObject Music;
 
     //Game Beat
     public float Music_Beat = (60 / 95) * 2; //105
@@ -46,17 +43,7 @@ public class GameManageBeatDevil : MonoBehaviour
     private float Beat_timer;
     private float Random_timer;
 
-    //Badge system
-    public bool Sword_Master = false;
-    public bool Gun_Master = false;
-    public bool Shield_Master = false;
-    public bool Hammer_Master = false;
-    public bool Is_Boss_Possible = false;
-
-    //Game state
-    private bool IsGameOver = false;
-    private bool IsVictory = false;
-
+    bool IsBossStage = false;
 
     // Start is called before the first frame update
     public TextMeshProUGUI HitMessage;
@@ -92,7 +79,7 @@ public class GameManageBeatDevil : MonoBehaviour
         HitMessage.enabled = false;
 
         //CurrentWeapon = WeaponType.Sword;
-        RemainTime.value = 180;
+        //RemainTime.value = 180;
 
         // Make sure there's only one instance of this object
         if (FindObjectsOfType<GameManage>().Length > 1)
@@ -116,6 +103,87 @@ public class GameManageBeatDevil : MonoBehaviour
 
        
     }
+
+    public void Tool_Practice_Btn(string toolName)
+    {
+        switch (toolName)
+        {
+            case "Sword":
+                CurrentStage = WeaponType.Sword;
+                IsBossStage = false;
+                Dummy.SetActive(false);
+                break;
+            case "Gun":
+                CurrentStage = WeaponType.Gun;
+                IsBossStage = false;
+                Dummy.SetActive(false);
+                break;
+            case "Shield":
+                CurrentStage = WeaponType.Shield;
+                IsBossStage = false;
+                Dummy.SetActive(false);
+                break;
+            case "Hammer":
+                CurrentStage = WeaponType.Hammer;
+                IsBossStage = false;
+                Dummy.SetActive(false);
+                break;
+            case "Boss":
+                IsBossStage = true;
+                Dummy.SetActive(false);
+                break;
+            case "Dummy":
+                CurrentStage = WeaponType.Main;
+                IsBossStage = false;
+                Dummy.SetActive(true);
+                break;
+            default:
+                break;
+        }
+    }
+    public void Tutorial_UI_Btn(string num)
+    {
+        if(num == "1")
+        {
+            if (TutorialUI1.activeSelf)
+            {
+                TutorialUI1.SetActive(false);
+            }
+            else
+            {
+                TutorialUI1.SetActive(true);
+            }
+        }
+        if (num == "2")
+        {
+            if (TutorialUI2.activeSelf)
+            {
+                TutorialUI2.SetActive(false);
+            }
+            else
+            {
+                TutorialUI2.SetActive(true);
+            }
+        }
+    }
+    public void Level_Practice_Btn(string Level)
+    {
+        switch (Level)
+        {
+            case "Easy":
+                CurrentLevel = GameLevel.Easy;
+                break;
+            case "Normal":
+                CurrentLevel = GameLevel.Normal;
+                break;
+            case "Hard":
+                CurrentLevel = GameLevel.Hard;
+                break;
+            default:
+                break;
+        }
+    }
+
     public void LoadTargetScene(string targetSceneName)
     {
         SceneManager.LoadScene(targetSceneName);
@@ -162,58 +230,10 @@ public class GameManageBeatDevil : MonoBehaviour
                 break;
         }
     }
-    public void BadgeCheck()
-    {
-        if(TorqueGauge.value == TorqueGauge.maxValue)
-        {
-            switch (CurrentStage)
-            {
-                case WeaponType.Sword:
-                    Debug.Log("You Mastered Sword!");
-                    Sword_Master = true;
-                    break;
-                case WeaponType.Gun:
-                    Gun_Master = true;
-                    Debug.Log("You Mastered Gun!");
-                    break;
-                case WeaponType.Shield:
-                    Shield_Master = true;
-                    Debug.Log("You Mastered Shield!");
-                    break;
-                case WeaponType.Hammer:
-                    Hammer_Master = true;
-                    Debug.Log("You Mastered Hammer!");
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
+   
     public void GameOverCheck()
     {
-        RemainTime.value = 180 - Total_Timer;
-        if(HPGauge.value <= 0)
-        {
-            IsVictory = true;
-            Debug.Log("Game Victory!");
-            CurrentStage = WeaponType.Victory;
-            CurrentLevel = GameLevel.Over;
-            float Score = Total_Timer;
-            Debug.Log("Your score: " + Score);
-            Music.SetActive(false);
-        }
-        if (RemainTime.value <= 0)
-        {
-            IsGameOver = true;
-            if (!IsVictory)
-            {
-                Debug.Log("Game Over!");
-                CurrentStage = WeaponType.Over;
-                CurrentLevel = GameLevel.Over;
-                Music.SetActive(false);
-            }
-        }
-        if (!IsVictory && !IsGameOver)
+        if (IsBossStage)
         {
             //Boss Random Obstacles
             if (Random_timer > 4f) //Easy 2개 나올 시간
@@ -237,21 +257,21 @@ public class GameManageBeatDevil : MonoBehaviour
 
     public void Update_GameLevel()
     {
-        if(HPGauge.value>70.0 && HPGauge.value <= 100.0)
-        {
-            CurrentLevel = GameLevel.Easy;
-        }else if (HPGauge.value > 40.0 && HPGauge.value <= 70.0)
-        {
-            CurrentLevel = GameLevel.Normal;
-        }
-        if (HPGauge.value > 0.0 && HPGauge.value <= 40.0)
-        {
-            CurrentLevel = GameLevel.Hard;
-        }
-        if (HPGauge.value <= 0.0)
-        {
-            Debug.Log("Game Over!");
-        }
+        //if(HPGauge.value>70.0 && HPGauge.value <= 100.0)
+        //{
+        //    CurrentLevel = GameLevel.Easy;
+        //}else if (HPGauge.value > 40.0 && HPGauge.value <= 70.0)
+        //{
+        //    CurrentLevel = GameLevel.Normal;
+        //}
+        //if (HPGauge.value > 0.0 && HPGauge.value <= 40.0)
+        //{
+        //    CurrentLevel = GameLevel.Hard;
+        //}
+        //if (HPGauge.value <= 0.0)
+        //{
+        //    Debug.Log("Game Over!");
+        //}
         switch (CurrentLevel)
         {
             case GameLevel.Easy:
@@ -266,6 +286,8 @@ public class GameManageBeatDevil : MonoBehaviour
                 break;
             case GameLevel.Hard:
                 //Debug.Log("Hard");
+                //Current_Music_Beat = Music_Beat / Random.Range(2, 4);
+
                 int randomN = Random.Range(0, 10);
                 if (randomN >= 8)
                 {
@@ -310,18 +332,6 @@ public class GameManageBeatDevil : MonoBehaviour
                 Hammer_Obstacle();
                 break;
             case WeaponType.Main:
-                break;
-            case WeaponType.Over:
-                //Debug.Log("Hard");
-                GameLevel_Text.text = "Game Over";
-                BossFigure.SetActive(false);
-                GameOverFigure.SetActive(true);
-                break;
-            case WeaponType.Victory:
-                //Debug.Log("Hard");
-                GameLevel_Text.text = "Victory!";
-                BossFigure.SetActive(false);
-                VictoryFigure.SetActive(true);
                 break;
             default:
                 

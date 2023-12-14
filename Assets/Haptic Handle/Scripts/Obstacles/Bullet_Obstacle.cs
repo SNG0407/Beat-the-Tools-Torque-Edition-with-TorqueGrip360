@@ -37,7 +37,7 @@ public class Bullet_Obstacle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position += Time.deltaTime * transform.up * 4;
+        transform.position += Time.deltaTime * transform.up * 2;
         if(transform.position.z <0.7)
         {
             

@@ -24,8 +24,19 @@ public class Saber : MonoBehaviour
             {
                 if (hit.transform.gameObject.GetComponent<Cube>())
                 {
-                    Debug.Log(hit.transform.name + " is hit.");
+                    //Debug.Log(hit.transform.name + " is hit.");
+                    Debug.Log(layer.value+ " is hit. Layer");
                     hit.transform.gameObject.GetComponent<Cube>().HitObject();
+                    if(layer.value== 512)
+                    {
+                        StartCoroutine(GameManageBeatDevil.instance.ShowHitMessage("[Blue] Perfect hit!", Color.blue));
+                        GameManageBeatDevil.instance.HPGauge.value = GameManageBeatDevil.instance.HPGauge.value - 5;
+                    }
+                    else if (layer.value == 1024)
+                    {
+                        StartCoroutine(GameManageBeatDevil.instance.ShowHitMessage("[Red] Perfect hit!", Color.red));
+                        GameManageBeatDevil.instance.HPGauge.value = GameManageBeatDevil.instance.HPGauge.value - 5;
+                    }
                 }
 
                 //Destroy(hit.transform.gameObject);
