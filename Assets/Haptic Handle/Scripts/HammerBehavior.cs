@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HammerBehavior : MonoBehaviour
 {
@@ -35,10 +36,18 @@ public class HammerBehavior : MonoBehaviour
             {
                 if (collision.gameObject.name.Contains("Crate_Red"))
                 {
+                    if (SceneManager.GetActiveScene().name == "BeatDevil")
+                    {
+                        GameManageBeatDevil.instance.HPGauge.value = GameManageBeatDevil.instance.HPGauge.value - 5;
+                        StartCoroutine(GameManageBeatDevil.instance.ShowHitMessage("[Red] Perfect hit!", Color.red));
+                    }
+                    else
+                    {
+                        GameManage.instance.TorqueGauge.value++;
+                        StartCoroutine(GameManage.instance.ShowHitMessage("[Red] Perfect hit!", Color.red));
+                    }
                     Debug.Log($"child: {contact.thisCollider.transform.name}, " + $"Beat Obj: {collision.gameObject.transform.name}");
                     // Add your desired logic here based on the collided child
-                    StartCoroutine(GameManageBeatDevil.instance.ShowHitMessage("[Red] Perfect hit!", Color.red));
-                    GameManageBeatDevil.instance.HPGauge.value = GameManageBeatDevil.instance.HPGauge.value - 5;
                     hasCollided = true;
                 }
             }
@@ -48,10 +57,18 @@ public class HammerBehavior : MonoBehaviour
                 {
                     if (collision.gameObject.name.Contains("Crate_Blue"))
                     {
+                        if (SceneManager.GetActiveScene().name == "BeatDevil")
+                        {
+                            GameManageBeatDevil.instance.HPGauge.value = GameManageBeatDevil.instance.HPGauge.value - 5;
+                            StartCoroutine(GameManageBeatDevil.instance.ShowHitMessage("[Blue] Perfect hit!", Color.blue));
+                        }
+                        else
+                        {
+                            GameManage.instance.TorqueGauge.value++;
+                            StartCoroutine(GameManage.instance.ShowHitMessage("[Blue] Perfect hit!", Color.blue));
+                        }
                         Debug.Log($"child: {contact.thisCollider.transform.name}, " + $"Beat Obj: {collision.gameObject.transform.name}");
                         // Add your desired logic here based on the collided child
-                        StartCoroutine(GameManageBeatDevil.instance.ShowHitMessage("[Blue] Perfect hit!", Color.blue));
-                        GameManageBeatDevil.instance.HPGauge.value = GameManageBeatDevil.instance.HPGauge.value - 5;
                         hasCollided = true;
                     }
                 }

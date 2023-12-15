@@ -316,16 +316,31 @@ public class GameManageBeatDevil : MonoBehaviour
                 GameLevel_Text.text = "Game Over";
                 BossFigure.SetActive(false);
                 GameOverFigure.SetActive(true);
+                DestroyObjectsWithTag("Blue");
+                DestroyObjectsWithTag("BeatCube");
+                DestroyObjectsWithTag("Red");
                 break;
             case WeaponType.Victory:
                 //Debug.Log("Hard");
                 GameLevel_Text.text = "Victory!";
                 BossFigure.SetActive(false);
                 VictoryFigure.SetActive(true);
+                DestroyObjectsWithTag("Blue");
+                DestroyObjectsWithTag("BeatCube");
+                DestroyObjectsWithTag("Red");
                 break;
             default:
                 
                 break;
+        }
+    }
+    void DestroyObjectsWithTag(string tag)
+    {
+        GameObject[] objectsToDestroy = GameObject.FindGameObjectsWithTag(tag);
+
+        foreach (GameObject obj in objectsToDestroy)
+        {
+            Destroy(obj);
         }
     }
     public void Sword_Obstacle()

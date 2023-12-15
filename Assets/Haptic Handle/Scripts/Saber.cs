@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.SceneManagement;
 public class Saber : MonoBehaviour
 {
     public LayerMask layer;
@@ -29,13 +30,29 @@ public class Saber : MonoBehaviour
                     hit.transform.gameObject.GetComponent<Cube>().HitObject();
                     if(layer.value== 512)
                     {
-                        StartCoroutine(GameManageBeatDevil.instance.ShowHitMessage("[Blue] Perfect hit!", Color.blue));
-                        GameManageBeatDevil.instance.HPGauge.value = GameManageBeatDevil.instance.HPGauge.value - 5;
+                        if (SceneManager.GetActiveScene().name == "BeatDevil")
+                        {
+                            GameManageBeatDevil.instance.HPGauge.value = GameManageBeatDevil.instance.HPGauge.value - 5;
+                            StartCoroutine(GameManageBeatDevil.instance.ShowHitMessage("[Blue] Perfect hit!", Color.blue));
+                        }
+                        else
+                        {
+                            GameManage.instance.TorqueGauge.value++;
+                            StartCoroutine(GameManage.instance.ShowHitMessage("[Blue] Perfect hit!", Color.blue));
+                        }
                     }
                     else if (layer.value == 1024)
                     {
-                        StartCoroutine(GameManageBeatDevil.instance.ShowHitMessage("[Red] Perfect hit!", Color.red));
-                        GameManageBeatDevil.instance.HPGauge.value = GameManageBeatDevil.instance.HPGauge.value - 5;
+                        if (SceneManager.GetActiveScene().name == "BeatDevil")
+                        {
+                            GameManageBeatDevil.instance.HPGauge.value = GameManageBeatDevil.instance.HPGauge.value - 5;
+                            StartCoroutine(GameManageBeatDevil.instance.ShowHitMessage("[Red] Perfect hit!", Color.red));
+                        }
+                        else
+                        {
+                            GameManage.instance.TorqueGauge.value++;
+                            StartCoroutine(GameManage.instance.ShowHitMessage("[Red] Perfect hit!", Color.red));
+                        }
                     }
                 }
 

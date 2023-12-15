@@ -179,6 +179,10 @@ public class GameManage : MonoBehaviour
                     default:
                         break;
                 }
+                DestroyObjectsWithTag("BeatCube");
+                DestroyObjectsWithTag("Blue");
+                DestroyObjectsWithTag("Red");
+                BadgeImageOn();
             }
         }
         else
@@ -274,6 +278,15 @@ public class GameManage : MonoBehaviour
             default:
                 //Sword_Obstacle();
                 break;
+        }
+    }
+    void DestroyObjectsWithTag(string tag)
+    {
+        GameObject[] objectsToDestroy = GameObject.FindGameObjectsWithTag(tag);
+
+        foreach (GameObject obj in objectsToDestroy)
+        {
+            Destroy(obj);
         }
     }
     public void Sword_Obstacle()

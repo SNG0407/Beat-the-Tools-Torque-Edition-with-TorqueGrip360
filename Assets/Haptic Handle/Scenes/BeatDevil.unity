@@ -1221,8 +1221,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d56f57e9d7152da4c903ce352173f5c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentStage: 0
-  HoldingWeapon: 0
+  CurrentStage: 3
+  HoldingWeapon: 3
   CurrentLevel: 2
   Sword_Obstacles:
   - {fileID: 2906462250529345943, guid: 3478fd63e5ffb324ea4472aef1f122e4, type: 3}

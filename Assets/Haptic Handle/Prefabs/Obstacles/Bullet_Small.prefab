@@ -265,7 +265,7 @@ GameObject:
   - component: {fileID: 5190430705903419569}
   m_Layer: 0
   m_Name: Bullet_Small
-  m_TagString: BeatCube
+  m_TagString: Red
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
