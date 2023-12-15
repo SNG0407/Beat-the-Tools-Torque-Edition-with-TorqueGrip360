@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class Target : MonoBehaviour
 {
-
+    public ParticleSystem particleSystem;
+    private MeshRenderer meshRenderer;
+    private MeshRenderer child1MeshRenderer; // Reference to the Mesh Renderer of Child 1
+    private MeshRenderer child1MeshRenderer2; // Reference to the Mesh Renderer of Child 1
+    private Collider collider;
+    private Collider child1Collider;
     // Start is called before the first frame update
     void Start()
     {
@@ -12,9 +17,18 @@ public class Target : MonoBehaviour
     }
     private void Awake()
     {
+        // Get the Mesh Renderer component of the object.
+        meshRenderer = GetComponent<MeshRenderer>();
 
-    
+        // Get the Mesh Renderer component of Child 1.
+        child1MeshRenderer = transform.GetChild(0).GetComponent<MeshRenderer>();
+        child1MeshRenderer2 = transform.GetChild(1).GetComponent<MeshRenderer>();
 
+        // Get the Collider component of the object.
+        collider = GetComponent<Collider>();
+
+        // Get theCollider  component of Child 1.
+        //child1Collider = transform.GetChild(1).GetComponent<Collider>();
     }
     // Update is called once per frame
     void Update()
@@ -26,6 +40,43 @@ public class Target : MonoBehaviour
             Destroy(transform.gameObject);
             //Debug.Log("It wasn't destroied");
         }
+    }
+    public void HitObject()
+    {
+        // Disable the Mesh Renderer to make the object invisible.
+        meshRenderer.enabled = false;
+
+        // Disable the Mesh Renderer of Child 1 to make it invisible.
+        if (child1MeshRenderer != null)
+        {
+            child1MeshRenderer.enabled = false;
+
+        }
+        if (child1MeshRenderer2 != null)
+        {
+            child1MeshRenderer2.enabled = false;
+        }
+
+        collider.enabled = false;
+        //child1Collider.enabled = false;
+
+        // Activate the particle system.
+        particleSystem.Play();
+        //Debug.Log(gameObject.transform.name + " is Particle....");
+
+        // Start a coroutine to wait for the particle system to finish.
+        StartCoroutine(WaitForParticleCompletion());
+    }
+
+    private IEnumerator WaitForParticleCompletion()
+    {
+        // Wait for the duration of the particle system.
+        yield return new WaitForSeconds(particleSystem.main.duration);
+
+        // Destroy the object.
+        //Debug.Log(gameObject.transform.name + " is detroied.");
+        Debug.Log("Destroy!!!");
+        Destroy(gameObject);
     }
     private void OnCollisionEnter(Collision collision)
     {

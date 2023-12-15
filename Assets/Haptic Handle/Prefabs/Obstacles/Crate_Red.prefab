@@ -1368,7 +1368,7 @@ GameObject:
   - component: {fileID: 3167270245641545603}
   m_Layer: 0
   m_Name: Crate_Red
-  m_TagString: BeatCube
+  m_TagString: Red
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

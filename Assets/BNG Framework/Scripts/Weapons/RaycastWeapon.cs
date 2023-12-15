@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Events;
 
+using UnityEngine.SceneManagement;
 namespace BNG {
 
     /// <summary>
@@ -13,6 +14,7 @@ namespace BNG {
 
         [Header("General : ")]
         public LayerMask layer;
+        private bool hasCollided = false;
 
         /// <summary>
         /// How far we can shoot in meters
@@ -402,13 +404,14 @@ namespace BNG {
                 // Raycast to hit
                 RaycastHit hit;
 
-                if (Physics.Raycast(MuzzlePointTransform.position, MuzzlePointTransform.forward, out hit, MaxRange, layer, QueryTriggerInteraction.Ignore))
-                {
-                    OnRaycastHit_BeatSaber(hit);
-                }
-                else
+                //if (Physics.Raycast(MuzzlePointTransform.position, MuzzlePointTransform.forward, out hit, MaxRange, layer, QueryTriggerInteraction.Ignore))
+                //{
+                //    OnRaycastHit_BeatSaber(hit);
+                //}
+                //else
                 if (Physics.Raycast(MuzzlePointTransform.position, MuzzlePointTransform.forward, out hit, MaxRange, ValidLayers, QueryTriggerInteraction.Ignore))
                 {
+                    //Debug.Log("Hit Name: " + hit.transform.name);
                     OnRaycastHit(hit);
                 }
 
@@ -529,65 +532,99 @@ namespace BNG {
         // Hit something without Raycast. Apply damage, apply FX, etc.
         public virtual void OnRaycastHit(RaycastHit hit) {
 
-            ApplyParticleFX(hit.point, Quaternion.FromToRotation(Vector3.forward, hit.normal), hit.collider);
+            //ApplyParticleFX(hit.point, Quaternion.FromToRotation(Vector3.forward, hit.normal), hit.collider);
 
             //Debug.Log(hit.collider.name);
             //Debug.Log(hit.collider.tag);
-            Debug.Log(gameObject.transform.name + " hit the " + hit.collider.name);
-            Debug.Log("This layer: "+ layer.value);
-            Debug.Log("Hit layer: "+ hit.collider.gameObject.layer);
-            if (hit.collider.tag == "BeatCube")
-            {
-                Debug.Log(hit.collider.name);
-                //hit.collider.GetComponent<DestoryableObject>().StarDestoryed(hit.point);
-                GameManage.instance.TorqueGauge.value++;
-            }
-            //DestoryableObject
-            if (hit.collider.tag == "Star")
-            {
-                Debug.Log(hit.collider.name);
-                hit.collider.GetComponent<DestoryableObject>().StarDestoryed(hit.point);
-
-            }
-            //Debug.Log(hit.collider.tag);
-            //DestoryableObject
-            //else if (hit.collider.gameObject.layer == layer.value)
+            //Debug.Log(gameObject.transform.name + " hit the " + hit.collider.name);
+            //Debug.Log("This layer: "+ layer.value);
+            //Debug.Log("Hit layer: "+ hit.collider.gameObject.layer);
+            //if (hit.collider.tag == "BeatCube")
             //{
-            //    Debug.Log("Same Layer");
-            //    if (hit.transform.gameObject.GetComponent<Cube>())
-            //    {
-            //        Debug.Log(hit.transform.name + " is hit.");
-            //        hit.transform.gameObject.GetComponent<Cube>().HitObject();
-            //    }
+            //    Debug.Log(hit.collider.name);
+            //    //hit.collider.GetComponent<DestoryableObject>().StarDestoryed(hit.point);
+            //    GameManage.instance.TorqueGauge.value++;
             //}
-            else
+            if(this.name == "PistolSilenced_Right")
             {
-                // push object if rigidbody
-                Rigidbody hitRigid = hit.collider.attachedRigidbody;
-                if (hitRigid != null)
+                if (hit.collider.CompareTag("Red"))
                 {
-                    hitRigid.AddForceAtPosition(BulletImpactForce * MuzzlePointTransform.forward, hit.point);
-
-                }
-
-                // Damage if possible
-                Damageable d = hit.collider.GetComponent<Damageable>();
-                if (d)
-                {
-                    d.DealDamage(Damage, hit.point, hit.normal, true, gameObject, hit.collider.gameObject);
-
-                    if (onDealtDamageEvent != null)
+                    if (hit.collider.gameObject.name.Contains("Target"))
                     {
-                        onDealtDamageEvent.Invoke(Damage);
+                        if (SceneManager.GetActiveScene().name == "BeatDevil")
+                        {
+                            GameManageBeatDevil.instance.HPGauge.value = GameManageBeatDevil.instance.HPGauge.value - 5;
+                            StartCoroutine(GameManageBeatDevil.instance.ShowHitMessage("[Red] Perfect hit!", Color.red));
+                        }
+                        else
+                        {
+                            GameManage.instance.TorqueGauge.value++;
+                            StartCoroutine(GameManage.instance.ShowHitMessage("[Red] Perfect hit!", Color.red));
+                        }
+                        //Debug.Log($"child: {contact.thisCollider.transform.name}, " + $"Beat Obj: {collision.gameObject.transform.name}");
+                        // Add your desired logic here based on the collided child
+                        //hasCollided = true;
+                        hit.transform.gameObject.GetComponent<Target>().HitObject();
+                    }
+                } 
+            }
+            if (this.name == "PistolSilenced_Left")
+            {
+                if (hit.collider.CompareTag("Blue"))
+                {
+                    if (hit.collider.gameObject.name.Contains("Target"))
+                    {
+                        if (SceneManager.GetActiveScene().name == "BeatDevil")
+                        {
+                            GameManageBeatDevil.instance.HPGauge.value = GameManageBeatDevil.instance.HPGauge.value - 5;
+                            StartCoroutine(GameManageBeatDevil.instance.ShowHitMessage("[Blue] Perfect hit!", Color.blue));
+                        }
+                        else
+                        {
+                            GameManage.instance.TorqueGauge.value++;
+                            StartCoroutine(GameManage.instance.ShowHitMessage("[Blue] Perfect hit!", Color.blue));
+                        }
+                        hit.transform.gameObject.GetComponent<Target>().HitObject();
                     }
                 }
-
-                // Call event
-                if (onRaycastHitEvent != null)
-                {
-                    onRaycastHitEvent.Invoke(hit);
-                }
             }
+
+
+                //DestoryableObject
+            //if (hit.collider.tag == "Star")
+            //{
+            //    Debug.Log(hit.collider.name);
+            //    hit.collider.GetComponent<DestoryableObject>().StarDestoryed(hit.point);
+
+            //}
+            //else
+            //{
+            //    // push object if rigidbody
+            //    Rigidbody hitRigid = hit.collider.attachedRigidbody;
+            //    if (hitRigid != null)
+            //    {
+            //        hitRigid.AddForceAtPosition(BulletImpactForce * MuzzlePointTransform.forward, hit.point);
+
+            //    }
+
+            //    // Damage if possible
+            //    Damageable d = hit.collider.GetComponent<Damageable>();
+            //    if (d)
+            //    {
+            //        d.DealDamage(Damage, hit.point, hit.normal, true, gameObject, hit.collider.gameObject);
+
+            //        if (onDealtDamageEvent != null)
+            //        {
+            //            onDealtDamageEvent.Invoke(Damage);
+            //        }
+            //    }
+
+            //    // Call event
+            //    if (onRaycastHitEvent != null)
+            //    {
+            //        onRaycastHitEvent.Invoke(hit);
+            //    }
+            //}
 
             
         }

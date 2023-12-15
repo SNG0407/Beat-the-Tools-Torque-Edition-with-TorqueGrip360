@@ -45,6 +45,7 @@ public class GameManage : MonoBehaviour
     public GameObject Shield_Badge;
     public GameObject Hammer_Badge;
     public GameObject ToolMaster_Badge;
+    public TextMeshProUGUI HitMessage;
 
     // Start is called before the first frame update
 
@@ -74,6 +75,8 @@ public class GameManage : MonoBehaviour
     }
     void Start()
     {
+        HitMessage.enabled = false;
+
         //CurrentWeapon = WeaponType.Sword;
         RemainTime.value = 180;
 
@@ -198,19 +201,42 @@ public class GameManage : MonoBehaviour
 
     public void Update_GameLevel()
     {
+        if (TorqueGauge.value < TorqueGauge.maxValue / 3)
+        {
+            CurrentLevel = GameLevel.Easy;
+        }
+        else if (TorqueGauge.value >= TorqueGauge.maxValue * 1 / 3 &&TorqueGauge.value < TorqueGauge.maxValue * 2 / 3)
+        {
+            CurrentLevel = GameLevel.Normal;
+        }
+        else if (TorqueGauge.value >= TorqueGauge.maxValue * 2 / 3 && TorqueGauge.value < TorqueGauge.maxValue)
+        {
+            CurrentLevel = GameLevel.Hard;
+        }
         switch (CurrentLevel)
         {
             case GameLevel.Easy:
                 //Debug.Log("Easy");
                 Current_Music_Beat = Music_Beat;
+                GameLevel_Text.text = "Easy";
                 break;
             case GameLevel.Normal:
                 //Debug.Log("Normal");
                 Current_Music_Beat = Music_Beat/2f;
+                GameLevel_Text.text = "Normal";
                 break;
             case GameLevel.Hard:
                 //Debug.Log("Hard");
-                Current_Music_Beat = Music_Beat / Random.Range(2, 4);
+                int randomN = Random.Range(0, 10);
+                if (randomN >= 8)
+                {
+                    Current_Music_Beat = Music_Beat / 3;
+                }
+                else
+                {
+                    Current_Music_Beat = Music_Beat / 2;
+                }
+                GameLevel_Text.text = "Hard";
                 break;
             default:
                 Current_Music_Beat = Music_Beat;
@@ -293,5 +319,18 @@ public class GameManage : MonoBehaviour
             Beat_timer -= Current_Music_Beat;
         }
         Beat_timer += Time.deltaTime;
+    }
+
+    public IEnumerator ShowHitMessage(string msg, Color textColor)
+    {
+        // Display hit message
+        HitMessage.enabled = true;
+        HitMessage.text = msg;
+        HitMessage.color = textColor;
+        // Wait for the specified duration
+        yield return new WaitForSeconds(1f);
+
+        // Hide hit message after the specified duration
+        HitMessage.enabled = false;
     }
 }
