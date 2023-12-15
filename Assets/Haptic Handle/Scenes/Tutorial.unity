@@ -4691,8 +4691,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GameManageBeatDevil, Assembly-CSharp
+      - m_Target: {fileID: 286305792}
+        m_TargetAssemblyTypeName: GameManageTutorial, Assembly-CSharp
         m_MethodName: LoadTargetScene
         m_Mode: 5
         m_Arguments:

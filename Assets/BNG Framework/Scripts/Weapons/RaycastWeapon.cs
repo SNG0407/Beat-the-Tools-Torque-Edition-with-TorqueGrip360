@@ -556,8 +556,12 @@ namespace BNG {
                             GameManageBeatDevil.instance.HPGauge.value = GameManageBeatDevil.instance.HPGauge.value - 5;
                             StartCoroutine(GameManageBeatDevil.instance.ShowHitMessage("[Red] Perfect hit!", Color.red));
                         }
-                        else
+                        else if (SceneManager.GetActiveScene().name == "Tutorial")
                         {
+                            StartCoroutine(GameManageTutorial.instance.ShowHitMessage("[Red] Perfect hit!", Color.red));
+                        }
+                        else
+                                {
                             GameManage.instance.TorqueGauge.value++;
                             StartCoroutine(GameManage.instance.ShowHitMessage("[Red] Perfect hit!", Color.red));
                         }
@@ -578,6 +582,10 @@ namespace BNG {
                         {
                             GameManageBeatDevil.instance.HPGauge.value = GameManageBeatDevil.instance.HPGauge.value - 5;
                             StartCoroutine(GameManageBeatDevil.instance.ShowHitMessage("[Blue] Perfect hit!", Color.blue));
+                        }
+                        else if (SceneManager.GetActiveScene().name == "Tutorial")
+                        {
+                            StartCoroutine(GameManageTutorial.instance.ShowHitMessage("[Blue] Perfect hit!", Color.blue));
                         }
                         else
                         {

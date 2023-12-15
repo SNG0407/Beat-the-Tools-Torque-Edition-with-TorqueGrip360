@@ -95,12 +95,12 @@ public class GameManageBeatDevil : MonoBehaviour
         RemainTime.value = 180;
 
         // Make sure there's only one instance of this object
-        if (FindObjectsOfType<GameManage>().Length > 1)
-        {
-            Destroy(gameObject);
-        }
-        // Keep this object alive across scene changes
-        DontDestroyOnLoad(gameObject);
+        //if (FindObjectsOfType<GameManage>().Length > 1)
+        //{
+        //    Destroy(gameObject);
+        //}
+        //// Keep this object alive across scene changes
+        //DontDestroyOnLoad(gameObject);
     }
 
     // Update is called once per frame

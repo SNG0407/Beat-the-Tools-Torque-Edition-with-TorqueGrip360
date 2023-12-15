@@ -35,6 +35,10 @@ public class Saber : MonoBehaviour
                             GameManageBeatDevil.instance.HPGauge.value = GameManageBeatDevil.instance.HPGauge.value - 5;
                             StartCoroutine(GameManageBeatDevil.instance.ShowHitMessage("[Blue] Perfect hit!", Color.blue));
                         }
+                        else if (SceneManager.GetActiveScene().name == "Tutorial")
+                        {
+                            StartCoroutine(GameManageTutorial.instance.ShowHitMessage("[Blue] Perfect hit!", Color.blue));
+                        }
                         else
                         {
                             GameManage.instance.TorqueGauge.value++;
@@ -47,6 +51,10 @@ public class Saber : MonoBehaviour
                         {
                             GameManageBeatDevil.instance.HPGauge.value = GameManageBeatDevil.instance.HPGauge.value - 5;
                             StartCoroutine(GameManageBeatDevil.instance.ShowHitMessage("[Red] Perfect hit!", Color.red));
+                        }
+                        else if (SceneManager.GetActiveScene().name == "Tutorial")
+                        {
+                            StartCoroutine(GameManageTutorial.instance.ShowHitMessage("[Red] Perfect hit!", Color.red));
                         }
                         else
                         {
