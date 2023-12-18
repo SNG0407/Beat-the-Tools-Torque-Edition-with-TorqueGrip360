@@ -6,7 +6,10 @@ public class Bullet_Obstacle : MonoBehaviour
 {
     public ParticleSystem particleSystem;
     private MeshRenderer meshRenderer;
-    private MeshRenderer child1MeshRenderer; // Reference to the Mesh Renderer of Child 1
+    private MeshRenderer child1MeshRenderer1; // Reference to the Mesh Renderer of Child 1
+    private MeshRenderer child1MeshRenderer2; // Reference to the Mesh Renderer of Child 1
+    private MeshRenderer child1MeshRenderer3; // Reference to the Mesh Renderer of Child 1
+    private MeshRenderer child1MeshRenderer4; // Reference to the Mesh Renderer of Child 1
     private Collider collider;
     private Collider child1Collider;
 
@@ -25,7 +28,10 @@ public class Bullet_Obstacle : MonoBehaviour
         meshRenderer = GetComponent<MeshRenderer>();
 
         // Get the Mesh Renderer component of Child 1.
-        child1MeshRenderer = transform.GetChild(1).GetComponent<MeshRenderer>();
+        child1MeshRenderer1 = transform.GetChild(0).GetComponent<MeshRenderer>();
+        child1MeshRenderer2 = transform.GetChild(1).GetComponent<MeshRenderer>();
+        child1MeshRenderer3 = transform.GetChild(2).GetComponent<MeshRenderer>();
+        child1MeshRenderer4 = transform.GetChild(3).GetComponent<MeshRenderer>();
 
         // Get the Collider component of the object.
         collider = GetComponent<Collider>();
@@ -51,7 +57,10 @@ public class Bullet_Obstacle : MonoBehaviour
         //meshRenderer.enabled = false;
 
         // Disable the Mesh Renderer of Child 1 to make it invisible.
-        child1MeshRenderer.enabled = false;
+        child1MeshRenderer1.enabled = false;
+        child1MeshRenderer2.enabled = false;
+        child1MeshRenderer3.enabled = false;
+        child1MeshRenderer4.enabled = false;
 
         collider.enabled = false;
         //child1Collider.enabled = false;

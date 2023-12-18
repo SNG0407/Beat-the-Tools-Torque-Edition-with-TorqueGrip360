@@ -44,7 +44,8 @@ public class GameManage : MonoBehaviour
     public GameObject Gun_Badge;
     public GameObject Shield_Badge;
     public GameObject Hammer_Badge;
-    public GameObject ToolMaster_Badge;
+    public GameObject ToolMaster_Badge; 
+    public GameObject ToolMaster_UI; 
     public TextMeshProUGUI HitMessage;
 
     // Start is called before the first frame update
@@ -72,9 +73,11 @@ public class GameManage : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        TorqueGauge.maxValue = 30;
     }
     void Start()
     {
+        
         HitMessage.enabled = false;
 
         //CurrentWeapon = WeaponType.Sword;
@@ -147,9 +150,22 @@ public class GameManage : MonoBehaviour
         }
         if(Sword_Master == true && Gun_Master == true && Shield_Master == true && Hammer_Master == true)
         {
-            Is_Boss_Possible = true;
-            ToolMaster_Badge.SetActive(true);
+            if (!Is_Boss_Possible)
+            {
+                Is_Boss_Possible = true;
+                StartCoroutine(BecameToolMaster());
+            }
         }
+    }
+    public IEnumerator BecameToolMaster()
+    {
+        ToolMaster_UI.SetActive(true);
+
+        yield return new WaitForSeconds(3f);
+        ToolMaster_UI.SetActive(false);
+
+        ToolMaster_Badge.SetActive(true);
+
     }
     public void BadgeCheck()
     {

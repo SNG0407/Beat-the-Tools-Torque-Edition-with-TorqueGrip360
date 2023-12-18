@@ -28,7 +28,7 @@ public class ShieldBehavior : MonoBehaviour
     {
         //Debug.Log("Something hit");
         // Check if the collision is from an object that you want to leave a mark
-        if (!hasCollided && collision.gameObject.CompareTag("Red"))
+        if (collision.gameObject.CompareTag("Red"))
         {
             if (collision.gameObject.name.Contains("Bullet"))
             {
@@ -63,7 +63,7 @@ public class ShieldBehavior : MonoBehaviour
                 hasCollided = true;
             }
         }
-        if (!hasCollided && collision.gameObject.CompareTag("Blue"))
+        if (collision.gameObject.CompareTag("Blue"))
         {
             if (collision.gameObject.name.Contains("Bullet"))
             {
