@@ -11,6 +11,10 @@ public class ShieldBehavior : MonoBehaviour
     public GameObject markPrefab;
     private Transform markParent;
     private bool hasCollided = false;
+    public Transform shieldCenter; // 방패의 중심
+
+    [SerializeField]
+    private Transform marker; // 마크의 위치
 
     private void Start()
     {
@@ -36,9 +40,10 @@ public class ShieldBehavior : MonoBehaviour
 
                 // Create a mark at the contact point
                 GameObject mark = Instantiate(markPrefab, contact.point, Quaternion.identity, this.gameObject.transform);
+                Calculate_Distance_Angle(mark, shieldCenter);
 
                 // Destroy the mark after one second
-                Destroy(mark, 1f);
+                Destroy(mark, 2f);
 
                 Debug.Log(gameObject.transform.name + " hit : " + collision.gameObject.transform.name);
 
@@ -71,9 +76,10 @@ public class ShieldBehavior : MonoBehaviour
 
                 // Create a mark at the contact point
                 GameObject mark = Instantiate(markPrefab, contact.point, Quaternion.identity, this.gameObject.transform);
+                Calculate_Distance_Angle(mark, shieldCenter);
 
                 // Destroy the mark after one second
-                Destroy(mark, 1f);
+                Destroy(mark, 2f);
 
                 Debug.Log(gameObject.transform.name + " hit : " + collision.gameObject.transform.name);
 
@@ -99,7 +105,28 @@ public class ShieldBehavior : MonoBehaviour
             }
         }
     }
+    public void Calculate_Distance_Angle(GameObject mark, Transform shieldCenter)
+    {
+        // 방패의 중심과 마크 사이의 벡터
+        marker = mark.transform;
+        Vector2 direction = marker.position - shieldCenter.position;
 
+        // 거리 계산
+        float distance = direction.magnitude;
+
+        // 각도 계산 (라디안 -> 도)
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        // 각도를 0-360도로 변환
+        if (angle < 0)
+        {
+            angle += 360;
+        }
+
+        // 결과 출력
+        Debug.Log("Distance: " + distance);
+        Debug.Log("Angle: " + angle);
+    }
     //private void HideMark()
     //{
     //    lineRenderer.enabled = false; // Hide the LineRenderer
