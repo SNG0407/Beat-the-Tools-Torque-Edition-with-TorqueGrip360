@@ -10335,7 +10335,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3594841392878154752, guid: c11d1066dc09d494d8acd9ca504d4de2, type: 3}
       propertyPath: onShootEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: sendTorque
+      value: SendShootData
       objectReference: {fileID: 0}
     - target: {fileID: 3594841392878154752, guid: c11d1066dc09d494d8acd9ca504d4de2, type: 3}
       propertyPath: onShootEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -10343,7 +10343,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3594841392878154752, guid: c11d1066dc09d494d8acd9ca504d4de2, type: 3}
       propertyPath: onShootEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: B
+      value: C0#0#200#10
       objectReference: {fileID: 0}
     - target: {fileID: 3594841392878154752, guid: c11d1066dc09d494d8acd9ca504d4de2, type: 3}
       propertyPath: onShootEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -15579,7 +15579,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2846685263277749109, guid: 338b73bca5e49f146beefdccf9811a04, type: 3}
       propertyPath: onShootEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: sendTorque
+      value: SendShootData
       objectReference: {fileID: 0}
     - target: {fileID: 2846685263277749109, guid: 338b73bca5e49f146beefdccf9811a04, type: 3}
       propertyPath: onShootEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -15587,7 +15587,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2846685263277749109, guid: 338b73bca5e49f146beefdccf9811a04, type: 3}
       propertyPath: onShootEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: C
+      value: C0#0#255#50
       objectReference: {fileID: 0}
     - target: {fileID: 2846685263277749109, guid: 338b73bca5e49f146beefdccf9811a04, type: 3}
       propertyPath: onShootEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -20341,14 +20341,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 759684095}
         m_TargetAssemblyTypeName: SendTorqueFeedback, Assembly-CSharp
-        m_MethodName: sendTorque
+        m_MethodName: SendShootData
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: AAA
+          m_StringArgument: C0#0#100#30
           m_BoolArgument: 0
         m_CallState: 2
   onAttachedAmmoEvent:

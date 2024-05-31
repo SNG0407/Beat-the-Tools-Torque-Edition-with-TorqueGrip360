@@ -28,6 +28,14 @@ public class SendTorqueFeedback : MonoBehaviour
         
        // sendTorque("0#0#100");
     }
+    public void SendShootData(string data)
+    {
+        if (serial_Torque.IsOpen)
+        {
+            serial_Torque.WriteLine(data + "\n");
+            Debug.Log("Data Sent: " + data);
+        }
+    }
     public void sendTorque(string data)
     {
         serial_Torque.Write(data);
