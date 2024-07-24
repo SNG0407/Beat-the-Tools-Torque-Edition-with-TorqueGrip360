@@ -210,7 +210,7 @@ public class GameManage : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name != "MainScene")
         { 
-            RemainTime.value = 180 - Total_Timer;
+            RemainTime.value = 1000 - Total_Timer;
             if (RemainTime.value <= 0)
             {
                 Debug.Log("Game Over!");

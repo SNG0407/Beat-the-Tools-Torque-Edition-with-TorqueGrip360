@@ -13,7 +13,7 @@ public class SendTorqueFeedback : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        serial_Torque  = new SerialPort(ComPortNum, 2000000); //here change port - where you have connected arduino to computer
+        serial_Torque  = new SerialPort(ComPortNum, 9600); //here change port - where you have connected arduino to computer
         serial_Torque.Open();
     }
 
@@ -72,6 +72,7 @@ public class SendTorqueFeedback : MonoBehaviour
         // 어플리케이션 종료 시 시리얼 포트 닫기
         if (serialPort.IsOpen)
         {
+            serial_Torque.WriteLine("A0#0#0#0" + "\n");
             serialPort.Close();
         }
     }
