@@ -10343,7 +10343,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3594841392878154752, guid: c11d1066dc09d494d8acd9ca504d4de2, type: 3}
       propertyPath: onShootEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: B
+      value: C#0#255#0#30
       objectReference: {fileID: 0}
     - target: {fileID: 3594841392878154752, guid: c11d1066dc09d494d8acd9ca504d4de2, type: 3}
       propertyPath: onShootEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -15587,7 +15587,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2846685263277749109, guid: 338b73bca5e49f146beefdccf9811a04, type: 3}
       propertyPath: onShootEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: C
+      value: C#0#255#0#100
       objectReference: {fileID: 0}
     - target: {fileID: 2846685263277749109, guid: 338b73bca5e49f146beefdccf9811a04, type: 3}
       propertyPath: onShootEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
