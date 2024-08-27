@@ -20,6 +20,7 @@ public class HammerBehavior : MonoBehaviour
     public Vector3 previous_Transform_Hammer;
     public Vector3 current_Transform_Hammer;
     public Vector3 velocity_Hammer;
+    public float velocity_Hammer_mag;
 
     public Vector3 dir_Hammer_Box; //Torque direction = -1 * dir_Hammer_Box;
     Vector3 hammerNormal;// = Hammer_Center.transform.up;  // 평면의 법선 벡터
@@ -89,6 +90,7 @@ public class HammerBehavior : MonoBehaviour
         //Calculate the velocity of the hammer.
         current_Transform_Hammer = Hammer_Center.transform.position;
         velocity_Hammer = current_Transform_Hammer - previous_Transform_Hammer;
+        velocity_Hammer_mag = velocity_Hammer.magnitude;
         //Debug.Log("V_Hammer: " + velocity_Hammer);
         //Debug.Log("V_Hammer: " + velocity_Hammer.x.ToString("F4")+", " + velocity_Hammer.y.ToString("F4") + ", " + velocity_Hammer.z.ToString("F4"));
         //Debug.Log("S_Hammer: " + velocity_Hammer.magnitude.ToString("F4"));
@@ -157,42 +159,14 @@ public class HammerBehavior : MonoBehaviour
         // 결과 출력
         Debug.Log("Angle: " + angle);
 
-      
+        CalculateTorqueFeedback(angle);
     }
-    void CalculateTorqueFeedback(float distance, float angle, int BulletColor)
+    void CalculateTorqueFeedback(float angle)
     {
-        //If the distance is bigger, the duration will be longer for more torque.
-        //The amount of the force(speed of the motor) depends on the bullet force.
-        //Which means bigger and faster bullet makes higher force.
+        //more higher the velocity is more torque you will get.
 
-        //거리에 따른 duration에 weight주기
-        float normalizedDistance = Mathf.Clamp01(distance / 0.43f);
-        if (BulletColor == 1)
-        {
-            //duraion_total = normalizedDistance * duraion_RedBullet;
-            //Force_total = Force_RedBullet;
-        }
-        else if (BulletColor == 2)
-        {
-            //duraion_total = normalizedDistance * duraion_BlueBullet;
-            //Force_total = Force_BlueBullet;
-        }
-
-
-
-        // 각도를 라디안으로 변환
-        //float angleRad = angle * Mathf.Deg2Rad;
-
-        // 목표 방향 벡터 계산
-        //Vector3 targetDirection = new Vector3(Mathf.Cos(angleRad), 0, Mathf.Sin(angleRad));
-        //targetDirection = new Vector3(Mathf.Cos(angleRad), 0, Mathf.Sin(angleRad));
-
-
-        //float distance_duration_scaleFactor;
-
-        //Devide the area into 12 areas (30degree)
-        int area = 0;
-
+        //velocity_Hammer
+        
         if (angle >= 0 && angle < 90) //1
         {
             float DesiredAngleRad = (angle) * Mathf.Deg2Rad;
@@ -223,9 +197,14 @@ public class HammerBehavior : MonoBehaviour
         }
         Debug.Log("Weight: " + weight_A + ", " + weight_B + ", " + weight_C);
 
-        PWM_Motor_A = (int)(Force_total * weight_A) > 255 ? 255 : (int)(Force_total * weight_A);
-        PWM_Motor_B = (int)(Force_total * weight_B) > 255 ? 255 : (int)(Force_total * weight_B);
-        PWM_Motor_C = (int)(Force_total * weight_C) > 255 ? 255 : (int)(Force_total * weight_C);
+        //Velocity -> 0~0.15
+        // 속도를 0에서 1 사이로 정규화
+        float normalizedSpeed = Mathf.Clamp01(velocity_Hammer_mag / 0.01f);
+        Debug.Log("normalizedSpeed: " + normalizedSpeed);
+
+        PWM_Motor_A = (int)(255 * normalizedSpeed* weight_A) > 255 ? 255 : (int)(255 * normalizedSpeed * weight_A);
+        PWM_Motor_B = (int)(255 * normalizedSpeed * weight_B) > 255 ? 255 : (int)(255 * normalizedSpeed * weight_B);
+        PWM_Motor_C = (int)(255 * normalizedSpeed * weight_C) > 255 ? 255 : (int)(255 * normalizedSpeed * weight_C);
         Debug.Log("PWM_Motor: " + PWM_Motor_A + ", " + PWM_Motor_B + ", " + PWM_Motor_C);
         int dur = (int)duraion_total;
         string TorqueData = "A";
