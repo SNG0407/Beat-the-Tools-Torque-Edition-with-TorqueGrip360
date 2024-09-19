@@ -8,7 +8,7 @@ using static UnityEditorInternal.VersionControl.ListControl;
 public class SendTorqueFeedback : MonoBehaviour
 {
     public SerialPort serialPort;
-    public const string ComPortNum = "COM10";
+    public const string ComPortNum = "COM12";
     public SerialPort serial_Torque;
     // Start is called before the first frame update
     void Start()

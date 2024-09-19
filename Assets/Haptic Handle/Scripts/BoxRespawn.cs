@@ -30,7 +30,7 @@ public class BoxRespawn : MonoBehaviour
                 initialPositions[child.name] = child.localPosition;
                 initialRotations[child.name] = child.localRotation;
 
-                Debug.Log("Init: "+ child.name+": "+ initialPositions[child.name]);
+                //Debug.Log("Init: "+ child.name+": "+ initialPositions[child.name]);
             }
         }
     }
@@ -62,7 +62,11 @@ public class BoxRespawn : MonoBehaviour
         {
             crateDestroyed.gameObject.SetActive(true);
         }
-
+        if(boxPrefab.GetComponent<BoxCollider>() != null)
+        {
+            //boxPrefab.GetComponent<BoxCollider>().enabled = false;
+            //Debug.Log("Collider disenabled...");
+        }
         // 상자 재생성 코루틴 시작
         StartCoroutine(RespawnBox());
     }
@@ -106,15 +110,20 @@ public class BoxRespawn : MonoBehaviour
                     child.localPosition = initialPositions[child.name];
                     child.localRotation = initialRotations[child.name];
 
-                    Debug.Log("Relo: " + child.name + ": " + child.localPosition);
+                    //Debug.Log("Relo: " + child.name + ": " + child.localPosition);
                 }
                 else
                 {
-                    Debug.Log("No initial data for: " + child.name);
+                    //Debug.Log("No initial data for: " + child.name);
                 }
             }
+            if (boxPrefab.GetComponent<BoxCollider>() != null)
+            {
+                boxPrefab.GetComponent<BoxCollider>().enabled = true;
+                //Debug.Log("Collider enabled...");
+            }
             crateDestroyed.gameObject.SetActive(false);
-            Debug.Log("Relocate");
+            //Debug.Log("Relocate");
         }
 
 

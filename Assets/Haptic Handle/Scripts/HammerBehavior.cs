@@ -31,7 +31,7 @@ public class HammerBehavior : MonoBehaviour
 
 
     private float Force_total = 0;
-    private float duraion_total = 0;
+    private float duraion_total = 100;
 
     private int PWM_Motor_A = 255;
     private int PWM_Motor_B = 255;
@@ -135,17 +135,17 @@ public class HammerBehavior : MonoBehaviour
     }
     void Calculate_Force_Angle(Vector3 dir_Hammer_Box)
     {
-        Debug.Log("dir_Hammer_Box: " + dir_Hammer_Box);
-        Debug.Log("dir_Hammer_Box: " + dir_Hammer_Box.magnitude.ToString("F4"));
+        //Debug.Log("dir_Hammer_Box: " + dir_Hammer_Box);
+        //Debug.Log("dir_Hammer_Box: " + dir_Hammer_Box.magnitude.ToString("F4"));
 
         // 적용되는 힘 (예시로 프로젝션된 방향을 힘으로 가정)
         projectedDirection =  dir_Hammer_Box - Vector3.Dot(dir_Hammer_Box, hammerNormal) * hammerNormal;
-        Debug.Log("projectedDirection: " + projectedDirection);
-        Debug.Log("projectedDirection: " + projectedDirection.magnitude.ToString("F4"));
+        //Debug.Log("projectedDirection: " + projectedDirection);
+        //Debug.Log("projectedDirection: " + projectedDirection.magnitude.ToString("F4"));
 
         // 월드 스페이스에서 마크의 위치를 방패의 로컬 스페이스로 변환
         var localDirection = Hammer_Center.transform.InverseTransformDirection(-1*(projectedDirection));
-        Debug.Log("localDirection: " + localDirection);
+        //Debug.Log("localDirection: " + localDirection);
         
         // x-z 평면을 기준으로 +z 방향을 0도로 설정하여 각도 계산
         float angle = Mathf.Atan2(localDirection.x, localDirection.z) * Mathf.Rad2Deg;
@@ -171,52 +171,52 @@ public class HammerBehavior : MonoBehaviour
         {
             float DesiredAngleRad = (angle) * Mathf.Deg2Rad;
             weight_A = 0;
-            weight_B = Mathf.Cos(DesiredAngleRad) * 1 / (Mathf.Cos(30 * Mathf.Deg2Rad));
-            weight_C = Mathf.Cos(DesiredAngleRad) * 1 / (2 * Mathf.Cos(30 * Mathf.Deg2Rad)) + Mathf.Sin(DesiredAngleRad);
+            weight_C = Mathf.Cos(DesiredAngleRad) * 1 / (Mathf.Cos(30 * Mathf.Deg2Rad));
+            weight_B = Mathf.Cos(DesiredAngleRad) * 1 / (2 * Mathf.Cos(30 * Mathf.Deg2Rad)) + Mathf.Sin(DesiredAngleRad);
         }
         else if (angle >= 90 && angle < 180) //2
         {
             float DesiredAngleRad = (180 - angle) * Mathf.Deg2Rad;
             weight_A = Mathf.Cos(DesiredAngleRad) * 1 / (Mathf.Cos(30 * Mathf.Deg2Rad));
-            weight_B = 0;
-            weight_C = Mathf.Cos(DesiredAngleRad) * 1 / (2 * Mathf.Cos(30 * Mathf.Deg2Rad)) + Mathf.Sin(DesiredAngleRad);
+            weight_C = 0;
+            weight_B = Mathf.Cos(DesiredAngleRad) * 1 / (2 * Mathf.Cos(30 * Mathf.Deg2Rad)) + Mathf.Sin(DesiredAngleRad);
         }
         else if (angle >= 180 && angle < 270) //3
         {
             float DesiredAngleRad = (angle - 180) * Mathf.Deg2Rad;
             weight_A = Mathf.Cos(DesiredAngleRad) * 1 / (Mathf.Cos(30 * Mathf.Deg2Rad)) + Mathf.Sin(DesiredAngleRad);
-            weight_B = Mathf.Sin(DesiredAngleRad);
-            weight_C = Mathf.Cos(DesiredAngleRad) * 1 / (2 * Mathf.Cos(30 * Mathf.Deg2Rad));
+            weight_C = Mathf.Sin(DesiredAngleRad);
+            weight_B = Mathf.Cos(DesiredAngleRad) * 1 / (2 * Mathf.Cos(30 * Mathf.Deg2Rad));
         }
         else if (angle >= 270 && angle < 360) //4
         {
             float DesiredAngleRad = (360 - angle) * Mathf.Deg2Rad;
             weight_A = Mathf.Sin(DesiredAngleRad);
-            weight_B = Mathf.Cos(DesiredAngleRad) * 1 / (Mathf.Cos(30 * Mathf.Deg2Rad)) + Mathf.Sin(DesiredAngleRad);
-            weight_C = Mathf.Cos(DesiredAngleRad) * 1 / (2 * Mathf.Cos(30 * Mathf.Deg2Rad));
+            weight_C = Mathf.Cos(DesiredAngleRad) * 1 / (Mathf.Cos(30 * Mathf.Deg2Rad)) + Mathf.Sin(DesiredAngleRad);
+            weight_B = Mathf.Cos(DesiredAngleRad) * 1 / (2 * Mathf.Cos(30 * Mathf.Deg2Rad));
         }
-        Debug.Log("Weight: " + weight_A + ", " + weight_B + ", " + weight_C);
+        //Debug.Log("Weight: " + weight_A + ", " + weight_B + ", " + weight_C);
 
         //Velocity -> 0~0.15
         // 속도를 0에서 1 사이로 정규화
-        float normalizedSpeed = Mathf.Clamp01(velocity_Hammer_mag / 0.01f);
+        float normalizedSpeed = Mathf.Clamp01(velocity_Hammer_mag / 0.02f);
         Debug.Log("normalizedSpeed: " + normalizedSpeed);
-
-        PWM_Motor_A = (int)(255 * normalizedSpeed* weight_A) > 255 ? 255 : (int)(255 * normalizedSpeed * weight_A);
-        PWM_Motor_B = (int)(255 * normalizedSpeed * weight_B) > 255 ? 255 : (int)(255 * normalizedSpeed * weight_B);
-        PWM_Motor_C = (int)(255 * normalizedSpeed * weight_C) > 255 ? 255 : (int)(255 * normalizedSpeed * weight_C);
-        Debug.Log("PWM_Motor: " + PWM_Motor_A + ", " + PWM_Motor_B + ", " + PWM_Motor_C);
+        normalizedSpeed = 1;
+        PWM_Motor_A = (int)(255 * 1* weight_A) > 255 ? 255 : (int)(255 * 1 * weight_A);
+        PWM_Motor_B = (int)(255 * 1 * weight_B) > 255 ? 255 : (int)(255 * 1 * weight_B);
+        PWM_Motor_C = (int)(255 * 1 * weight_C) > 255 ? 255 : (int)(255 * 1 * weight_C);
+        //Debug.Log("PWM_Motor: " + PWM_Motor_A + ", " + PWM_Motor_B + ", " + PWM_Motor_C);
         int dur = (int)duraion_total;
         string TorqueData = "A";
         TorqueData += PWM_Motor_A.ToString();
         TorqueData += "#";
-        TorqueData += PWM_Motor_B.ToString();
+        TorqueData += PWM_Motor_B.ToString();//'0';// 
         TorqueData += "#";
         TorqueData += PWM_Motor_C.ToString();
         TorqueData += "#";
         TorqueData += dur.ToString();
         send_T_D.SendShootData(TorqueData);
-        Debug.Log("TorqueData: " + TorqueData);
+        //Debug.Log("TorqueData: " + TorqueData);
 
     }
     private void OnCollisionExit(Collision collision)
@@ -284,7 +284,16 @@ public class HammerBehavior : MonoBehaviour
             //Torque feedback
             if (collision.gameObject.CompareTag("Blue"))
             {
-                Calculate_Force_Angle(dir_Hammer_Box);
+                if (collision.gameObject.GetComponent<BoxCollider>() != null)
+                {
+                    if(collision.gameObject.GetComponent<BoxCollider>().enabled == true)
+                    {
+                        Calculate_Force_Angle(dir_Hammer_Box);
+                    }
+                    collision.gameObject.GetComponent<BoxCollider>().enabled = false;
+                    //Debug.Log("Collider disenabled22...");
+                    
+                }
             }
         }
         //if (collision.gameObject.name.Contains("Crate_Blue") || collision.gameObject.name.Contains("Crate_Red"))

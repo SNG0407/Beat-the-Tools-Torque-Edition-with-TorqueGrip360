@@ -224,33 +224,34 @@ public class ShieldBehavior : MonoBehaviour
         //Devide the area into 12 areas (30degree)
         int area = 0;
 
-        if(angle>=0 && angle < 90) //1
+
+        if (angle >= 0 && angle < 90) //1
         {
-            float DesiredAngleRad = (angle)* Mathf.Deg2Rad;
+            float DesiredAngleRad = (angle) * Mathf.Deg2Rad;
             weight_A = 0;
-            weight_B = Mathf.Cos(DesiredAngleRad)* 1 / (Mathf.Cos(30* Mathf.Deg2Rad));
-            weight_C = Mathf.Cos(DesiredAngleRad) * 1 / (2 * Mathf.Cos(30 * Mathf.Deg2Rad))+ Mathf.Sin(DesiredAngleRad);
+            weight_C = Mathf.Cos(DesiredAngleRad) * 1 / (Mathf.Cos(30 * Mathf.Deg2Rad));
+            weight_B = Mathf.Cos(DesiredAngleRad) * 1 / (2 * Mathf.Cos(30 * Mathf.Deg2Rad)) + Mathf.Sin(DesiredAngleRad);
         }
-        else if(angle >= 90 && angle < 180) //2
+        else if (angle >= 90 && angle < 180) //2
         {
-            float DesiredAngleRad = (180-angle) * Mathf.Deg2Rad;
+            float DesiredAngleRad = (180 - angle) * Mathf.Deg2Rad;
             weight_A = Mathf.Cos(DesiredAngleRad) * 1 / (Mathf.Cos(30 * Mathf.Deg2Rad));
-            weight_B = 0;
-            weight_C = Mathf.Cos(DesiredAngleRad) * 1 / (2 * Mathf.Cos(30 * Mathf.Deg2Rad)) + Mathf.Sin(DesiredAngleRad);
+            weight_C = 0;
+            weight_B = Mathf.Cos(DesiredAngleRad) * 1 / (2 * Mathf.Cos(30 * Mathf.Deg2Rad)) + Mathf.Sin(DesiredAngleRad);
         }
-        else if (angle >= 180 && angle <270) //3
+        else if (angle >= 180 && angle < 270) //3
         {
-            float DesiredAngleRad = (angle-180) * Mathf.Deg2Rad;
+            float DesiredAngleRad = (angle - 180) * Mathf.Deg2Rad;
             weight_A = Mathf.Cos(DesiredAngleRad) * 1 / (Mathf.Cos(30 * Mathf.Deg2Rad)) + Mathf.Sin(DesiredAngleRad);
-            weight_B = Mathf.Sin(DesiredAngleRad);
-            weight_C = Mathf.Cos(DesiredAngleRad) * 1 / (2 * Mathf.Cos(30 * Mathf.Deg2Rad));
+            weight_C = Mathf.Sin(DesiredAngleRad);
+            weight_B = Mathf.Cos(DesiredAngleRad) * 1 / (2 * Mathf.Cos(30 * Mathf.Deg2Rad));
         }
         else if (angle >= 270 && angle < 360) //4
         {
-            float DesiredAngleRad = (360-angle) * Mathf.Deg2Rad;
+            float DesiredAngleRad = (360 - angle) * Mathf.Deg2Rad;
             weight_A = Mathf.Sin(DesiredAngleRad);
-            weight_B = Mathf.Cos(DesiredAngleRad) * 1 / (Mathf.Cos(30 * Mathf.Deg2Rad))+ Mathf.Sin(DesiredAngleRad);
-            weight_C = Mathf.Cos(DesiredAngleRad) * 1 / (2 * Mathf.Cos(30 * Mathf.Deg2Rad));
+            weight_C = Mathf.Cos(DesiredAngleRad) * 1 / (Mathf.Cos(30 * Mathf.Deg2Rad)) + Mathf.Sin(DesiredAngleRad);
+            weight_B = Mathf.Cos(DesiredAngleRad) * 1 / (2 * Mathf.Cos(30 * Mathf.Deg2Rad));
         }
         Debug.Log("Weight: " + weight_A + ", " + weight_B + ", " + weight_C);
 
