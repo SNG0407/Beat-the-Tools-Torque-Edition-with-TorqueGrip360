@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using static UnityEngine.GraphicsBuffer;
-
+using BNG;
 public class HammerBehavior : MonoBehaviour
 {
     //public Material markMaterial;
@@ -48,11 +48,21 @@ public class HammerBehavior : MonoBehaviour
     private Vector3 direction_Y1;
     private Vector3 direction_Y2;
 
+
+
+    //Haptic vibration
+    private InputBridge input;
+
     [SerializeField]
     private Transform marker; // 마크의 위치
     private float weight_A;
     private float weight_B;
     private float weight_C;
+
+    protected virtual void Awake()
+    {
+        input = InputBridge.Instance;
+    }
     private void Start()
     {
         if (SendTorqueData != null)
@@ -218,6 +228,8 @@ public class HammerBehavior : MonoBehaviour
         send_T_D.SendShootData(TorqueData);
         //Debug.Log("TorqueData: " + TorqueData);
 
+        input.VibrateController(0.1f, normalizedSpeed, 0.1f, ControllerHand.Right);
+        //Debug.Log("HAAHAHA");
     }
     private void OnCollisionExit(Collision collision)
     {
@@ -225,6 +237,16 @@ public class HammerBehavior : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
+        //Debug.Log(collision.gameObject.name);
+        //Debug.Log(collision.gameObject.tag);
+        if (collision.gameObject.CompareTag("Blue") || collision.gameObject.name== "Crate_Blue_Demo")
+        {
+            //float normalizedSpeed = Mathf.Clamp01(velocity_Hammer_mag / 0.02f);
+
+            //input.VibrateController(0.1f, normalizedSpeed * 1f, 0.1f, ControllerHand.Right);
+            //Debug.Log("HAAHAHA");
+        }
+           
         //Debug.Log("Something hit");
         // Check if the collision is from an object that you want to leave a mark
         //Debug.Log(gameObject.transform.name + " hit : " + collision.gameObject.transform.name);

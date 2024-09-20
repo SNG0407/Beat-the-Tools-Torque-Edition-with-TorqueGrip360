@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.Events;
 
 using UnityEngine.SceneManagement;
+using BNG;
+using UnityEngine.Windows;
 public class ShieldBehavior : MonoBehaviour
 {
     //public Material markMaterial;
@@ -47,12 +49,19 @@ public class ShieldBehavior : MonoBehaviour
     private float weight_B;
     private float weight_C;
 
+    //Haptic vibration
+    private InputBridge input;
+
 
     [Header("Events")]
 
     [Tooltip("Unity Event called when Shoot() method is successfully called")]
     public UnityEvent<string> onBlockEvent;
 
+    protected virtual void Awake()
+    {
+        input = InputBridge.Instance;
+    }
 
     private void Start()
     {
@@ -80,6 +89,17 @@ public class ShieldBehavior : MonoBehaviour
         Debug.Log("direction_Y1: " + direction_Y1 + ", " + direction_Y1.magnitude);
         Debug.Log("direction_Y2: " + direction_Y2 + ", " + direction_Y2.magnitude);
 
+       
+
+    }
+
+    private void Update()
+    {
+        //if (InputBridge.Instance.RightTrigger > 0)
+        //{
+        //    Debug.Log("Right trigger is being held down");
+        //    input.VibrateController(0.1f, 0.2f, 0.1f, ControllerHand.Right);
+        //}
     }
     private void OnCollisionExit(Collision collision)
     {
@@ -89,8 +109,10 @@ public class ShieldBehavior : MonoBehaviour
     {
         //Debug.Log("Something hit");
         // Check if the collision is from an object that you want to leave a mark
+        
         if (collision.gameObject.CompareTag("Red"))
         {
+            input.VibrateController(0.1f, 0.2f, 0.1f, ControllerHand.Right);
             if (collision.gameObject.name.Contains("Bullet"))
             {
                 ContactPoint contact = collision.contacts[0]; // Assuming the first contact point is what you want
@@ -127,6 +149,7 @@ public class ShieldBehavior : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Blue"))
         {
+            input.VibrateController(0.1f, 1f, 0.1f, ControllerHand.Right);
             if (collision.gameObject.name.Contains("Bullet"))
             {
                 ContactPoint contact = collision.contacts[0]; // Assuming the first contact point is what you want

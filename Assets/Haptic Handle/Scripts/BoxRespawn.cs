@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
+using BNG;
 public class BoxRespawn : MonoBehaviour
 {
     public GameObject boxPrefab; // 상자 프리팹
@@ -16,6 +16,10 @@ public class BoxRespawn : MonoBehaviour
     // 상자의 자식 오브젝트 찾기
     Transform crateUndestroyed;
     Transform crateDestroyed;
+
+    //Haptic vibration
+    private InputBridge input;
+
     void Start()
     {
 
@@ -41,6 +45,7 @@ public class BoxRespawn : MonoBehaviour
         // 무기와 충돌 체크 (무기의 태그가 "Weapon"이라 가정)
         if (collision.gameObject.CompareTag("Hammer") && !isDestroyed)
         {
+            
             DestroyBox();
         }
     }
@@ -49,6 +54,7 @@ public class BoxRespawn : MonoBehaviour
     {
         // 상자 파괴
         isDestroyed = true;
+
         Debug.Log("Hit");
 
         
