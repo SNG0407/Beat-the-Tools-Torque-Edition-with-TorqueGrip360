@@ -26,6 +26,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Haptic Handle/Scenes/BeatDevil.unity
     guid: acfc349479739a446a9ed15ab9853d5c
+  - enabled: 1
+    path: Assets/Haptic Handle/Scenes/ConferenceDemo/Shield Demo.unity
+    guid: 2cdd1fab26c5afb41a8754a5f3657587
   - enabled: 0
     path: Assets/Haptic Handle/Scenes/Tutorial.unity
     guid: 97156fe361db3fa42b1ecccd32144cc4

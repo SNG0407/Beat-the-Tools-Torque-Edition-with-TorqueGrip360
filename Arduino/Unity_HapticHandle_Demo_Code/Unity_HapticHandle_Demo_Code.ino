@@ -12,7 +12,7 @@ int Motor_B_Speed = 6; //PWM
 int Motor_C_Speed = 9;
 
 bool GameStartPlag = false;
-int normalPWN = 10;
+int normalPWN = 20;
 int durationV = 100;
 
 int motorA, motorB, motorC;
