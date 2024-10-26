@@ -385,7 +385,7 @@ namespace BNG {
             }
 
             // Use projectile if Time has been slowed
-            bool useProjectile = AlwaysFireProjectile || (FireProjectileInSlowMo && Time.timeScale < 1);
+            bool useProjectile = AlwaysFireProjectile || (FireProjectileInSlowMo && Time.timeScale < 0.1);
             if (useProjectile) {
                 GameObject projectile = Instantiate(ProjectilePrefab, MuzzlePointTransform.position, MuzzlePointTransform.rotation) as GameObject;
                 Rigidbody projectileRigid = projectile.GetComponentInChildren<Rigidbody>();
@@ -398,7 +398,7 @@ namespace BNG {
                 }
 
                 // Make sure we clean up this projectile
-                Destroy(projectile, 20);
+                Destroy(projectile, 5);
             }
             else {
                 // Raycast to hit
@@ -780,10 +780,10 @@ namespace BNG {
 
         protected virtual IEnumerator doMuzzleFlash() {
             MuzzleFlashObject.SetActive(true);
-            yield return new  WaitForSeconds(0.05f);
+            yield return new  WaitForSeconds(0.01f);
 
             randomizeMuzzleFlashScaleRotation();
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.01f);
 
             MuzzleFlashObject.SetActive(false);
         }

@@ -5,27 +5,31 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Haptic Handle/Scenes/BeatSaber2.unity
     guid: 4d6b2a2eab12dea4f8a773f312984a4a
-  - enabled: 1
+  - enabled: 0
     path: Assets/Haptic Handle/Scenes/BeatShield.unity
     guid: 67820718903158e4397e7e29f7e6a5e9
-  - enabled: 1
+  - enabled: 0
     path: Assets/Haptic Handle/Scenes/BeatShooting.unity
     guid: e609ab1096c3b3747b2e72e82b100e17
-  - enabled: 1
+  - enabled: 0
     path: Assets/Haptic Handle/Scenes/BeatHammer.unity
     guid: aab4ce2625794fa46b17690c41a7d45d
   - enabled: 1
+    path: Assets/Haptic Handle/Scenes/ConferenceDemo/Gun Demo.unity
+    guid: f58aed79daf49b24a9cb427993bbcc94
+  - enabled: 0
     path: Assets/Haptic Handle/Scenes/MainScene.unity
     guid: 7379276e94e04504a95b6e0117fe72ba
-  - enabled: 1
+  - enabled: 0
     path: Assets/Haptic Handle/Scenes/BeatDevil.unity
     guid: acfc349479739a446a9ed15ab9853d5c
-  - enabled: 1
+  - enabled: 0
     path: Assets/Haptic Handle/Scenes/Tutorial.unity
     guid: 97156fe361db3fa42b1ecccd32144cc4
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 684297ba481b1704fa3459b80e595c57, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 89535ab11f7c7c8468497ae0dc9c5698, type: 2}
+    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 1d424a4c2cc0bae468770fd3cb7bfd5a, type: 2}
